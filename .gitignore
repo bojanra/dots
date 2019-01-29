@@ -1,0 +1,8 @@
+*.un~
+.~*
+.netrwhist
+.netrwhist
+/vim/bundle
+/vim/autosess
+/vim/colors
+/vim/ftplugin

@@ -1,0 +1,740 @@
+" Setup ramsakb {{{1
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+filetype off
+
+let osys=system('uname -s')
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#rc()
+
+" Plugins {{{1
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+" A fancy file browser press <leader> n
+Plugin 'scrooloose/nerdtree'
+" Restore last open session, but only if more than 1 buffer were open
+" Plugin 'powerman/vim-plugin-autosess'
+" ack the better grep from within vim :Ack
+Plugin 'mileszs/ack.vim'
+" show the list of buffers in the command bar
+Plugin 'bling/vim-bufferline'
+" JSON Highlightning
+Plugin 'elzr/vim-json'
+" Extended % matching also for html
+Plugin 'tmhedberg/matchit'
+" Auto HTML closetag generator <\ or Crtl-shift-minus
+Plugin 'docunext/closetag.vim'
+" Tagbar :Tagbar replacement for vim-scripts/taglist.vim
+Plugin 'majutsushi/tagbar'
+" Many many coloschemas
+Plugin 'flazz/vim-colorschemes'
+" Vim two-pane outliner
+" Plugin 'vim-voom/VOoM'
+" A calendar application for Vim
+" Plugin 'mattn/calendar-vim'
+" Narrow Region Plugin
+" "Plugin 'chrisbra/NrrwRgn'
+" VimOrganizer a clone of Emacs' Org-mode
+" Plugin 'hsitz/VimOrganizer'
+" A wiki with vim for notetaking
+" Plugin 'vimwiki/vimwiki'
+" The VIM Outliner fork of vimoutliner/vimoutliner.git
+"Plugin 'insanum/votl'
+Plugin 'vimoutliner/vimoutliner.git'
+" Time tracker use :TimeTap to show stats
+Plugin 'rainerborene/vim-timetap.git'
+" Pomodoro plugin
+"Plugin 'vim-scripts/vim-pomodoro'
+" Syntax highlighting, matching rules and mappings for the original Markdown and extensions
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+" Lilypond highlighting"
+"Plugin 'gisraptor/vim-lilypond-integrator'
+" Twig syntax highlighting
+Plugin 'lumiliet/vim-twig'
+" Javascript highlight
+" Plugin 'pangloss/vim-javascript'
+" Syntax checker
+" Plugin 'vim-syntastic/syntastic'
+Plugin 'vim-airline/vim-airline'
+" Show linenumbers only in active window"
+Plugin 'AssailantLF/vim-active-numbers'
+" Show color of tag
+Bundle 'https://github.com/gorodinskiy/vim-coloresque.git'
+" vue.js plugin
+Plugin 'posva/vim-vue'
+" Syntax for TOML
+Plugin 'cespare/vim-toml'
+" Colorscheme switcher
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-colorscheme-switcher'
+" All of your Plugins must be added before the following line
+filetype plugin indent on    " required
+filetype indent on
+set synmaxcol=200
+syntax enable
+" Options {{{1
+" set autochdir     " Set working directory to the current file
+set autoindent    " always set autoindenting on
+set autowrite
+set backspace=indent,eol,start " allow backspacing over everything in insert mode
+set completeopt=longest,menuone,preview
+" set complete=.,w,b,u,t,i    " Better Completion
+set complete=.,w,b,u,t    " Better Completion
+set copyindent    " copy the previous indentation on autoindenting
+set encoding=utf-8
+set expandtab     " Auto expand tabs to spaces
+set fileencodings=utf-8
+set fileformats=unix,dos,mac
+" Folding
+" set foldclose=all " Autoclose folds, when moving out of them
+" set foldenable    "Enable code folding
+set foldmethod=marker
+set foldopen=hor,block,insert,mark,search,undo
+set formatoptions=qroct
+set gdefault      " always do global substitute /g
+set hidden        " Enable to open new files without saving existing
+set history=1000  " remember more commands and search history
+set hlsearch      " highlight search terms
+set ignorecase    " ignore case when searching
+" set incsearch     " show search matches as you type
+set langmenu=none
+set laststatus=2  " show status line always
+set listchars=tab:▸\ ,eol:¬,trail:.,extends:#,nbsp:.
+set mousehide     "Hide mouse when typing
+set nobackup
+set noerrorbells  " don't beep
+" set noguipty      " Make external commands work through a pipe instead of a pseudo-tty - troubles with ack
+set noswapfile
+set nowrap        " Do not wrap lines automatically
+set nowrap        " don't wrap lines
+" set number        " always show line numbers
+set relativenumber
+set omnifunc=syntaxcomplete#Complete
+set ruler         " show the cursor position all the time
+set scrolljump=5  " Jump 5 lines when running out of the screen
+set scrolloff=3   " Indicate jump out of the screen when 3 lines before end of the screen
+set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
+set shiftwidth=2  " number of spaces to use for autoindenting
+set shortmess=filnxtToOI
+set showcmd       " display incomplete commands
+set showmatch     " set show matching parenthesis
+set smartcase     " ignore case if search pattern is all lowercase,
+set smartindent   " Auto indent after a {
+set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
+set splitbelow
+set splitright
+set tabstop=2     " Set standard setting for PEAR coding standards
+set title         " change the terminal's title
+set undofile      " create undofiles
+set undolevels=1000      " use many muchos levels of undo
+set visualbell    " don't beep
+set wildignore=*.swp,*.bak,*.pyc,*.class
+set wildmode=list:longest "file/command completion useful
+set clipboard=unnamedplus  "use system clipboard by default
+" Suffixes that get lower priority when doing tab completion for filenames.
+" These are files we are not likely to want to edit or read.
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+" Default size of window
+set gtl=%t gtt=%F " Tab headings
+" Must be last
+"set textwidth=0   " Linewidth to endless
+set textwidth=120   " Linewidth to 120
+
+" Run makefile in parent dir if in current not found
+" let &makeprg = 'if [ -f Makefile ]; then make; else make -C ..; fi'
+" where to search for tags
+set tags=./tags,tags;$HOME
+" enable modeline
+set modeline
+" UI settings {{{1
+if has('gui_running')
+"  set guioptions=imTrL
+  set guioptions=i
+  set guitablabel=%t
+  noremap <M-Space> :simalt ~<CR>
+  inoremap <M-Space> <C-O>:simalt ~<CR>
+  cnoremap <M-Space> <C-C>:simalt ~<CR>
+  "set guifont=Monaco\ 11
+  set guifont=Inconsolata\ 12
+"
+"  colorscheme atom
+"  set background=dark
+"
+"  colorscheme peaksea
+"  set background=light
+"
+"  colorscheme navajo-night
+"
+"  colorscheme genericdc-light
+"  set background=light
+"
+"  colorscheme base16-ateliersulphurpool
+"  set background=dark
+"  set background=light
+"
+"  colorscheme solarized
+"  set background=dark
+"
+  colorscheme ashen
+  set background=light
+"  set lines=35 columns=150
+else
+  set guioptions-=a
+  set t_Co=256
+  set background=dark
+  colorscheme miko
+  highlight Normal ctermbg=NONE
+  highlight nonText ctermbg=NONE
+endif
+" Statusline - must be after colorscheme commmand {{{2
+set statusline=%t       "tail of the filename
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
+set statusline+=%=      "left/right separator
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+set statusline+=%{&ff}] "file format
+set statusline+=%y      "filetype
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+" Leadder stuff {{{1
+" define leader
+let mapleader = ","
+let maplocalleader = "."
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+" save and check syntax
+nnoremap <leader>c :w<CR>:!perl -wc %<CR>
+" open vimrc file
+nnoremap <leader>e <C-w><C-v><C-l>:e ~/.vimrc<CR>
+" open vimtips
+nnoremap <leader>v :e ~/.vim/vimtips<CR>
+" open cherrepg documentation
+nnoremap <leader>ch :e ~/desk/cherry/projekti/epg/doc/cherry.txt<CR>
+" close current buffer
+nnoremap <leader>q :bd<CR>
+" close current buffer, but not window
+nmap <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
+"b#<bar>bd#<CR>
+" remove trailing spaces
+nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
+" Switch between last two buffers
+nnoremap <leader><leader> <C-^>
+" Scratch buffer
+nnoremap <Leader>sc :e scratch<CR>:setlocal readonly<CR>
+" Run/execute current line in shell
+nnoremap <Leader>rl yy:r!<C-r>"<BS><CR>
+" Adjust viewports to the same size
+map <leader>= <C-w>=
+imap <leader>= <Esc> <C-w>="
+" change working directory to location of current file
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+" Tidy perl code
+nnoremap <leader>s :%!perltidy -q<CR>
+" Tidy/beautify javascript
+nnoremap <leader>J :%! js_beautify -s 2 -<CR>
+" Beautify JSON
+nnoremap <leader>j :%!json_pp<CR>
+vnoremap <leader>j :!json_pp<CR>
+" Mappings {{{1
+" when you forgot to sudo before editing a file that requires root privileges
+cmap w!! w !sudo tee % >/dev/null
+" start command mode by .
+" nnoremap . :
+"Bubble single lines (kicks butt)
+"http://vimcasts.org/episodes/bubbling-text/
+nmap <C-Up> ddkP
+nmap <C-Down> ddp
+"Bubble multiple lines
+vmap <C-Up> xkP`[V`]
+vmap <C-Down> xp`[V`]
+" Copy to clipboard
+vmap <C-C> "*y
+" Use CTRL-Q to do what CTRL-V used to do
+noremap <C-Q>       <C-V>
+" Some smart mappings
+" smash keys for ESC
+inoremap jk <Esc>
+inoremap kj <Esc>
+imap jj <Esc>
+imap uu _
+imap hh =>
+inoremap kk ->
+inoremap kkk ->{}<ESC>i
+inoremap "" ```
+imap aa @
+"cmap W w
+cmap WQ wq
+cmap wQ wq
+" use Q for formatting
+map  Q gq
+vmap Q gq
+nmap Q gqap
+" Space to toggle folds
+nnoremap <Space> za
+vnoremap <Space> za
+" nnoremap <Space> <PAGEDOWN>
+" Map <Space> to / (search)
+" map <space> /
+map <S-Insert> <MiddleMouse>
+map! <S-Insert> <MiddleMouse>
+" Use CTRL-S for saving, also in Insert mode
+noremap <C-S> :update<CR>
+vnoremap <C-S> <C-C>:update<CR>
+inoremap <C-S> <C-O>:update<CR>
+"Pressing F5 lists all buffer, just type number
+map  <F5> :ls<CR>:b
+" Autocomplete HTML tags
+inoremap <C-_> <C-R>=GetCloseTag()<CR>
+map <C-_> a<C-_><ESC>
+"Walk through buffers
+map <F2> :bprevious<cr>
+map <F3> :bnext<cr>
+map <C-tab> :bnext<cr>
+map <C-S-tab> :bprevious<cr>
+"Toggle wrap
+map <F6> :set wrap!<CR>
+"Mapping for make to F9
+map <F9> :make<CR>
+map <S-F9> :make upload<CR>
+map <C-F9> :make monitor<CR>
+"Toggle fullscreen
+map <F11> :exe "!wmctrl -r ".v:servername." -b toggle,fullscreen"<CR>
+" Map <C-Movement Keys> to move around windows
+map <C-L> <C-W>l
+map <C-K> <C-W>k
+map <C-J> <C-W>j
+map <C-H> <C-W>h
+"Tip #153: Making Parenthesis And Brackets Handling Easier
+inoremap ( ()<ESC>i
+inoremap [ []<ESC>i
+inoremap {<CR> {<CR>}<ESC>ko
+inoremap { {}<ESC>i
+" quick refactoring: replace keyword under cursor
+nnoremap gr gD:%s/<C-R>///c<left><left><left>
+" nmap <expr> M ':%s/' . @/ . '//g<LEFT><LEFT>'
+" vmap <expr> M ':s/' . @/ . '//g<LEFT><LEFT>'
+syntax on
+" Autocommands {{{1
+" Autoreload vimrc file on change
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
+" Higlight all occurences of word under cursor
+" autocmd CursorMoved * silent! exe printf('match IncSearch /\<%s\>/', expand('<cword>'))
+" Return to last edit position when opening files
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+""never see ^M again
+"autocmd BufRead * silent! %s/$//
+"autocmd BufRead * silent! %s/^M$//
+autocmd FileType perl setlocal tabstop=4
+autocmd FileType perl setlocal shiftwidth=4
+autocmd FileType vim setlocal foldmethod=marker
+autocmd BufNewFile,BufRead  *.t setfiletype perl
+autocmd BufNewFile,BufRead *.t2t set ft=txt2tags
+autocmd BufNewFile,BufRead *.cfg set ft=ivg
+autocmd BufNewFile,BufRead *.wiki set ft=dokuwiki
+autocmd BufNewFile,BufRead *.asm set ft=avr
+autocmd BufNewFile,BufRead *.bcl set ft=freebasic
+autocmd BufRead,BufNewFile *.pde set filetype=arduino
+autocmd BufRead,BufNewFile *.ino set filetype=arduino
+autocmd BufRead,BufNewFile *.otl set filetype=votl
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+autocmd BufRead,BufNewFile *.tt set filetype=html
+"autocmd BufRead,BufNewFile *.twig set filetype=html
+autocmd BufEnter,FileType *
+\ if has("gui_running") |
+\   if &ft ==# 'markdown' || &ft ==# 'votl' | colorscheme holokai |
+\   elseif &ft ==# 'vim' | colorscheme madeofcode |
+\   elseif &ft ==# 'perl' | colorscheme biogoo |
+\   else | colorscheme leo |
+\   endif |
+\ endif
+" Save when losing focus
+au FocusLost * :silent! wall
+" Highlight redundant whitespaces and tabs.
+highlight RedundantSpaces ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\|\t/
+match RedundantSpaces /\s\+$/
+" Make the 81st column stand out
+"highlight ColorColumn ctermbg=magenta
+"set colorcolumn=81
+"call matchadd('ColorColumn', '\%81v', 100)
+autocmd Syntax html,vim inoremap < <lt>><ESC>i|inoremap > <c-r>=ClosePair('>')<CR>
+" inoremap < <lt>><ESC>i
+" inoremap > <c-r>=ClosePair('>')<CR>
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap } <c-r>=ClosePair('}')<CR>
+inoremap " <c-r>=QuoteDelim('"')<CR>
+inoremap ' <c-r>=QuoteDelim("'")<CR>
+function! ClosePair(char)
+  if getline('.')[col('.') - 1] == a:char
+    return "\<Right>"
+  else
+    return a:char
+  endif
+endf
+function! QuoteDelim(char)
+  let line = getline('.')
+  let col = col('.')
+  if line[col - 2] == "\\"
+    "Inserting a quoted quotation mark into the string
+    return a:char
+  elseif line[col - 1] == a:char
+    "Escaping out of the string
+    return "\<Right>"
+  else
+    "Starting a string
+    return a:char.a:char."\<ESC>i"
+  endif
+endf
+" Highlight trailing whitespace " {{{2
+""highlight ExtraWhitespace guibg=#bd5353 ctermbg=131
+""augroup whitespace
+""    au!
+""    au ColorScheme * highlight ExtraWhitespace guibg=#bd5353 ctermbg=131
+""    au BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
+""    au BufWrite * match ExtraWhitespace /\s\+$\| \+\ze\t/
+""augroup end
+" Plugin configuration {{{1
+" NERDTree {{{2
+" close NERDTree after a file is opened
+" let g:NERDTreeQuitOnOpen=1
+" Toggle the file browser
+nnoremap <leader>n :NERDTreeToggle .<CR>
+" Find the current file in the file browser
+nnoremap <leader>m :NERDTreeFind<CR>
+" Ack {{{2
+let g:ackprg = "/usr/bin/ack -H --nocolor --nogroup --smart-case"
+nnoremap <leader>a :Ack<space>
+let g:ackhighlight = 1
+let g:ack_autofold_results = 1
+let g:ackpreview = 1
+" VimWiki and My notetaking {{{2
+let wiki_1 = {}
+let wiki_1.path = '~/desk/vimwiki/'
+let wiki_1.syntax = 'markdown'
+let wiki_1.ext = '.md'
+
+let wiki_2 = {}
+let wiki_2.path = '~/desk/tmp/'
+let wiki_2.syntax = 'markdown'
+let wiki_2.ext = '.md'
+
+let g:vimwiki_list = [wiki_1, wiki_2]
+"let g:vimwiki_list = [{'path': '~/.vim/notes/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+nnoremap <leader>. :Nack 
+nnoremap <leader>- :Note 
+command! -nargs=1 Nack Ack "<args>" ~/desk/vimwiki/
+command! -nargs=1 Note :exe "e! " . fnameescape("~/desk/vimwiki/<args>.md")
+nnoremap <C-N> :cnext<CR>
+nnoremap <C-P> :cprevious<CR>
+" }}}
+" VimOrganizer {{{2
+let g:ft_ignore_pat = '\.org'
+" and then put these lines in vimrc somewhere after the line above
+au! BufRead,BufWrite,BufWritePost,BufNewFile *.org
+au BufEnter *.org            call org#SetOrgFileType()
+" let g:org_capture_file = '~/org_files/mycaptures.org'
+command! OrgCapture :call org#CaptureBuffer()
+command! OrgCaptureFile :call org#OpenCaptureFile()
+" Markdown {{{2
+let g:vim_markdown_folding_disabled=0
+" Level shown when all folds are closed
+let g:vim_markdown_folding_level = 2
+" Tagbar {{{2
+nnoremap <leader>t :TagbarToggle<CR>
+map <leader><Tab> :TagbarToggle<CR>"
+" Closetag {{{2
+" Prevent building stack for other filetypes
+autocmd FileType html,php let b:closetag_html_style=1
+autocmd FileType html,php source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+" tslime {{{2
+" send commands to tmux
+" let g:tslime_always_current_session = 1
+" let g:tslime_always_current_window = 1
+vmap <C-c><C-c> <Plug>SendSelectionToTmux
+nmap <C-c><C-c> <Plug>NormalModeSendToTmux
+nmap <C-c>r <Plug>SetTmuxVars
+" Functions {{{1
+" InsertTabWrapper {{{2
+"Use <tab> and <shift-tab> in insert mode for autocompletition, except when at start of line
+"or not following a word Tip #102
+function! InsertTabWrapper(direction)
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    elseif "backward" == a:direction
+        return "\<c-p>"
+    else
+        return "\<c-n>"
+"        return pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete('buffer')
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
+inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
+" }}}
+" ShowFuncName - show current function name by pressing F {{{2
+function! ShowFuncName()
+  let lnum = line(".")
+  let col = col(".")
+  echohl ModeMsg
+  echo getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bW'))
+  echohl None
+  call search("\\%" . lnum . "l" . "\\%" . col . "c")
+endfunction
+" map F :call ShowFuncName() <CR>
+" }}}
+" Pasting blockwise {{{2
+" Pasting blockwise and linewise selections is not possible in Insert and
+" Visual mode without the +virtualedit feature.  They are pasted as if they
+" were characterwise instead.
+" Note: the same stuff appears in menu.vim.
+if has("virtualedit")
+  nnoremap <silent> <SID>Paste :call <SID>Paste()<CR>
+  func! <SID>Paste()
+    let ove = &ve
+    set ve=all
+    normal `^
+    if @+ != ''
+      normal "+gP
+    endif
+    let c = col(".")
+    normal i
+    if col(".") < c " compensate for i<ESC> moving the cursor left
+      normal l
+    endif
+let &ve = ove
+  endfunc
+  inoremap <script> <C-V>   x<BS><Esc><SID>Pastegi
+  vnoremap <script> <C-V>   "-c<Esc><SID>Paste
+else
+  nnoremap <silent> <SID>Paste  "=@+.'xy'<CR>gPFx"_2x
+  inoremap <script> <C-V>   x<Esc><SID>Paste"_s
+  vnoremap <script> <C-V>   "-c<Esc>gix<Esc><SID>Paste"_x
+endif
+imap <S-Insert>     <C-V>
+vmap <S-Insert>     <C-V>
+" }}}
+" Open a web-browser with the URL in the current line {{{2
+function! Browser ()
+  let line0 = getline (".")
+  let line = matchstr (line0, "http[^ ]*")
+  :if line==""
+  let line = matchstr (line0, "ftp[^ ]*")
+  :endif
+  :if line==""
+  let line = matchstr (line0, "file[^ ]*")
+  :endif
+  let line = escape (line, "#?&;|%")
+  :if line==""
+  let line = "\"" . (expand("%:p")) . "\""
+  :endif
+  exec ':silent !firefox ' . line
+endfunction
+map <f7> :call Browser ()<CR>
+" }}}
+" Trackclipboard {{{2
+" :call TrackClipboard('===============')
+function! TrackClipboard(delim)
+  let timer1 = 0
+  let temp = @*
+  while @*!='EOF'
+    if temp != @*
+      let temp = @*
+      $put =a:delim
+      $put =temp
+    else
+      " autowrite and redraw every cca 5s
+      let timer1 += 1
+      if timer1 >= 100
+        if &modified
+          write
+          redraw
+        endif
+        let timer1 = 0
+      else
+        sleep 50ms
+      endif
+    endif
+  endwhile
+endfunction
+" }}}
+" Search for visual selected text by pressing n or N {{{2
+function! Get_selected_text()
+    let tmp = @"
+    normal! gvy
+    normal! gv
+    let [tmp , @"] = [@" , tmp]
+    return tmp
+endfunc
+vnoremap n :<c-u>let @/='\V'.escape(Get_selected_text(),'\')<cr><esc>nzz
+vnoremap <s-n> :<c-u>let @/=Get_selected_text()<cr><esc><s-n>zz
+" }}}
+" List manpage in new buffer {{{2
+runtime ftplugin/man.vim
+if has("gui_running")
+	nnoremap K :<C-U>exe "Man" v:count "<C-R><C-W>"<CR>
+endif
+" }}}
+" PrettyJSON {{{2
+command! -range=% JSON <line1>,<line2>call PrettyJSON()
+function! PrettyJSON() range
+    exe a:firstline . "," . a:lastline . "!python2 -mjson.tool"
+endfun
+" format selected json
+"vnoremap <leader>j :JSON<CR>
+" }}} vim: fdm=marker
+" Add or subtract comments {{{2
+" Work out what the comment character is, by filetype...
+autocmd FileType             *sh,awk,python,perl,perl6,ruby    let b:cmt = exists('b:cmt') ? b:cmt : '#'
+autocmd FileType             vim                               let b:cmt = exists('b:cmt') ? b:cmt : '"'
+autocmd BufNewFile,BufRead   *.vim,.vimrc                      let b:cmt = exists('b:cmt') ? b:cmt : '"'
+autocmd BufNewFile,BufRead   *                                 let b:cmt = exists('b:cmt') ? b:cmt : '#'
+autocmd BufNewFile,BufRead   *.p[lm],.t                        let b:cmt = exists('b:cmt') ? b:cmt : '#'
+
+" Work out whether the line has a comment then reverse that condition...
+function! ToggleComment ()
+    " What's the comment character???
+    let comment_char = exists('b:cmt') ? b:cmt : '#'
+
+    " Grab the line and work out whether it's commented...
+    let currline = getline(".")
+
+    " If so, remove it and rewrite the line...
+    if currline =~ '^' . comment_char
+        let repline = substitute(currline, '^' . comment_char, "", "")
+        call setline(".", repline)
+
+    " Otherwise, insert it...
+    else
+        let repline = substitute(currline, '^', comment_char, "")
+        call setline(".", repline)
+    endif
+endfunction
+
+" Toggle comments down an entire visual selection of lines...
+function! ToggleBlock () range
+    " What's the comment character???
+    let comment_char = exists('b:cmt') ? b:cmt : '#'
+
+    " Start at the first line...
+    let linenum = a:firstline
+
+    " Get all the lines, and decide their comment state by examining the first...
+    let currline = getline(a:firstline, a:lastline)
+    if currline[0] =~ '^' . comment_char
+        " If the first line is commented, decomment all...
+        for line in currline
+            let repline = substitute(line, '^' . comment_char, "", "")
+            call setline(linenum, repline)
+            let linenum += 1
+        endfor
+    else
+        " Otherwise, encomment all...
+        for line in currline
+            let repline = substitute(line, '^\('. comment_char . '\)\?', comment_char, "")
+            call setline(linenum, repline)
+            let linenum += 1
+        endfor
+    endif
+endfunction
+
+" Set up the relevant mappings
+nmap <silent> # :call ToggleComment()<CR>j0
+vmap <silent> # :call ToggleBlock()<CR>
+" }}}
+" MyVotlColors {{{2
+function! MyVotlColors()
+  hi link OL1 Title
+  hi link OL7 Conditional
+  hi link OL3 PreProc
+  hi link OL5 Identifier
+  hi link OL4 Operator
+  hi link OL6 Statement
+"  hi link OL3 Statement
+  hi link OL2 Special
+  hi link OL8 Constant
+  hi link OL9 String
+
+  " colors for tags
+  hi outlTags guifg=darkred	ctermfg=darkred
+
+  " color for body text
+  for i in range(1, 9)
+      execute "highlight link BT".i." Type"
+      execute "highlight link PT".i." Comment"
+  endfor
+
+  " ...etc...
+endfunction
+autocmd FileType votl call MyVotlColors()
+" }}}
+" Search folding {{{2
+" Don't start new buffers folded
+"set foldlevelstart=99
+
+" Highlight folds
+highlight Folded  ctermfg=cyan ctermbg=black
+
+" Toggle on and off...
+nmap <silent> <expr>  zz  FS_ToggleFoldAroundSearch({'context':1})
+
+" Show only sub defns (and maybe comments)...
+"let perl_sub_pat = '^\s*\%(sub\|func\|method\|package\)\s\+\k\+'
+"let vim_sub_pat = '^\s*fu\%[nction!]\s\+\k\+'
+"augroup FoldSub
+"    autocmd!
+"    autocmd BufEnter * nmap <silent> <expr>  zp  FS_FoldAroundTarget(perl_sub_pat,{'context':1})
+"    autocmd BufEnter * nmap <silent> <expr>  za  FS_FoldAroundTarget(perl_sub_pat.'\\|^\s*#.*',{'context':0, 'folds':'invisible'})
+"    autocmd BufEnter *.vim,.vimrc nmap <silent> <expr>  zp  FS_FoldAroundTarget(vim_sub_pat,{'context':1})
+"    autocmd BufEnter *.vim,.vimrc nmap <silent> <expr>  za  FS_FoldAroundTarget(vim_sub_pat.'\\|^\s*".*',{'context':0, 'folds':'invisible'})
+"    autocmd BufEnter * nmap <silent> <expr>             zv  FS_FoldAroundTarget(vim_sub_pat.'\\|^\s*".*',{'context':0, 'folds':'invisible'})
+"augroup END
+
+" Show only C #includes...
+nmap <silent> <expr>  zu  FS_FoldAroundTarget('^\s*use\s\+\S.*;',{'context':1})
+" << after coutS mapping {{{2
+" Map , to << after writing cout in cpp
+function! CppSetupCout ()
+  inoremap , <<
+  imap ; <Esc>:call CppResetCout ()<CR>a;
+  map <Esc>, :call CppResetCout ()<CR>
+  imap <Esc>, <C-o>:call CppResetCout ()<CR>
+endf
+
+function! CppResetCout ()
+  iunmap ,
+  iunmap ;
+  imap <Esc>, <C-o>:call CppSetupCout ()<CR>
+  map <Esc>, :call CppSetupCout ()<CR>
+endfunction
+
+function! AuCpp ()
+  inoremap cout <End><Esc>:call CppSetupCout ()<CR>acout<<
+  imap <Esc>, <C-o>:call CppSetupCout ()<CR>
+  map <Esc>, :call CppSetupCout ()<CR>
+endfunction
+autocmd FileType cpp call AuCpp()
+" }}}
+" When autocompleting within an identifier, prevent duplications... {{{2
+augroup Undouble_Completions
+    autocmd!
+    autocmd CompleteDone *  call Undouble_Completions()
+augroup None
+
+function! Undouble_Completions ()
+    let col  = getpos('.')[2]
+    let line = getline('.')
+    call setline('.', substitute(line, '\(\k\+\)\%'.col.'c\zs\1', '', ''))
+endfunction
+" }}}
