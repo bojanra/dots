@@ -1,2 +1,2 @@
 # My dotfiles 
-My dotfiles for sharing accros machines
+My dotfiles for sharing across machines
