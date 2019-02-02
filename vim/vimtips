@@ -29,6 +29,9 @@ Switch off linebreak    | tslime
 :set lbr                | clear vars <C-c>r | show pane numbers in tmux leader q
 
 Step back from jumps <C-o>ut forward <C-i>n
+:vim pattern %   Search in current file and place in Quickfix  
+:vim pattern *   search in all files
+:clist  :ccl
 
 C++
 -------------

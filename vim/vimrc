@@ -25,10 +25,14 @@ Plugin 'elzr/vim-json'
 Plugin 'tmhedberg/matchit'
 " Auto HTML closetag generator <\ or Crtl-shift-minus
 Plugin 'docunext/closetag.vim'
+inoremap <C-_> <C-R>=GetCloseTag()<CR>
+map <C-_> a<C-_><ESC>
 " Tagbar :Tagbar replacement for vim-scripts/taglist.vim
 Plugin 'majutsushi/tagbar'
 " Many many coloschemas
 Plugin 'flazz/vim-colorschemes'
+" Show git diff
+Plugin 'airblade/vim-gitgutter'
 " Vim two-pane outliner
 " Plugin 'vim-voom/VOoM'
 " A calendar application for Vim
@@ -209,20 +213,21 @@ map <silent> <leader><cr> :noh<cr>
 " save and check syntax
 nnoremap <leader>c :w<CR>:!perl -wc %<CR>
 " open vimrc file
-nnoremap <leader>e <C-w><C-v><C-l>:e ~/.vimrc<CR>
+nnoremap <leader>e <C-w><C-v><C-l>:e ~/.vim/vimrc<CR>
 " open vimtips
 nnoremap <leader>v :e ~/.vim/vimtips<CR>
-" open cherrepg documentation
+" open cherryepg documentation
 nnoremap <leader>ch :e ~/desk/cherry/projekti/epg/doc/cherry.txt<CR>
 " close current buffer
 nnoremap <leader>q :bd<CR>
 " close current buffer, but not window
 nmap <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
-"b#<bar>bd#<CR>
 " remove trailing spaces
 nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
 " Switch between last two buffers
 nnoremap <leader><leader> <C-^>
+" grep in directory (instead of ack)
+" nnoremap <leader>a :vimgrep /\(<c-r>=expand("<cword>")<cr>\)/ *
 " Scratch buffer
 nnoremap <Leader>sc :e scratch<CR>:setlocal readonly<CR>
 " Run/execute current line in shell
@@ -242,8 +247,6 @@ vnoremap <leader>j :!json_pp<CR>
 " Mappings {{{1
 " when you forgot to sudo before editing a file that requires root privileges
 cmap w!! w !sudo tee % >/dev/null
-" start command mode by .
-" nnoremap . :
 "Bubble single lines (kicks butt)
 "http://vimcasts.org/episodes/bubbling-text/
 nmap <C-Up> ddkP
@@ -270,15 +273,12 @@ imap aa @
 cmap WQ wq
 cmap wQ wq
 " use Q for formatting
-map  Q gq
-vmap Q gq
-nmap Q gqap
+"map  Q gq
+"vmap Q gq
+"nmap Q gqap
 " Space to toggle folds
 nnoremap <Space> za
 vnoremap <Space> za
-" nnoremap <Space> <PAGEDOWN>
-" Map <Space> to / (search)
-" map <space> /
 map <S-Insert> <MiddleMouse>
 map! <S-Insert> <MiddleMouse>
 " Use CTRL-S for saving, also in Insert mode
@@ -287,9 +287,6 @@ vnoremap <C-S> <C-C>:update<CR>
 inoremap <C-S> <C-O>:update<CR>
 "Pressing F5 lists all buffer, just type number
 map  <F5> :ls<CR>:b
-" Autocomplete HTML tags
-inoremap <C-_> <C-R>=GetCloseTag()<CR>
-map <C-_> a<C-_><ESC>
 "Walk through buffers
 map <F2> :bprevious<cr>
 map <F3> :bnext<cr>
@@ -297,7 +294,12 @@ map <C-tab> :bnext<cr>
 map <C-S-tab> :bprevious<cr>
 "Toggle wrap
 map <F6> :set wrap!<CR>
-"Mapping for make to F9
+" Open quickfix window
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+"Makefile stuff - keybinding ... F9
+" Run makefile in parent dir if in current not found
+let &makeprg = 'if [ -f Makefile ]; then make; else make -C ..; fi'
 map <F9> :make<CR>
 map <S-F9> :make upload<CR>
 map <C-F9> :make monitor<CR>
@@ -317,6 +319,8 @@ inoremap { {}<ESC>i
 nnoremap gr gD:%s/<C-R>///c<left><left><left>
 " nmap <expr> M ':%s/' . @/ . '//g<LEFT><LEFT>'
 " vmap <expr> M ':s/' . @/ . '//g<LEFT><LEFT>'
+"runtime ftplugin/man.vim
+nnoremap K :<C-U>exe "Man" v:count "<C-R><C-W>"<CR>
 syntax on
 " Autocommands {{{1
 " Autoreload vimrc file on change
@@ -343,8 +347,8 @@ autocmd BufNewFile,BufRead *.cfg set ft=ivg
 autocmd BufNewFile,BufRead *.wiki set ft=dokuwiki
 autocmd BufNewFile,BufRead *.asm set ft=avr
 autocmd BufNewFile,BufRead *.bcl set ft=freebasic
-autocmd BufRead,BufNewFile *.pde set filetype=arduino
-autocmd BufRead,BufNewFile *.ino set filetype=arduino
+autocmd BufRead,BufNewFile *.pde set filetype=c
+autocmd BufRead,BufNewFile *.ino set filetype=cpp
 autocmd BufRead,BufNewFile *.otl set filetype=votl
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.tt set filetype=html
@@ -354,6 +358,7 @@ autocmd BufEnter,FileType *
 \   if &ft ==# 'markdown' || &ft ==# 'votl' | colorscheme holokai |
 \   elseif &ft ==# 'vim' | colorscheme madeofcode |
 \   elseif &ft ==# 'perl' | colorscheme biogoo |
+\   elseif &ft ==# 'cpp' | colorscheme xcode |
 \   else | colorscheme leo |
 \   endif |
 \ endif
@@ -414,6 +419,7 @@ nnoremap <leader>n :NERDTreeToggle .<CR>
 nnoremap <leader>m :NERDTreeFind<CR>
 " Ack {{{2
 let g:ackprg = "/usr/bin/ack -H --nocolor --nogroup --smart-case"
+"let g:ackprg = "/usr/bin/ack --nocolor --nogroup --smart-case"
 nnoremap <leader>a :Ack<space>
 let g:ackhighlight = 1
 let g:ack_autofold_results = 1
@@ -423,19 +429,43 @@ let wiki_1 = {}
 let wiki_1.path = '~/desk/vimwiki/'
 let wiki_1.syntax = 'markdown'
 let wiki_1.ext = '.md'
-
 let wiki_2 = {}
 let wiki_2.path = '~/desk/tmp/'
 let wiki_2.syntax = 'markdown'
 let wiki_2.ext = '.md'
-
 let g:vimwiki_list = [wiki_1, wiki_2]
+let g:vimWiki = '/home/ramsakb/desk/vimwiki/'
 "let g:vimwiki_list = [{'path': '~/.vim/notes/', 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-nnoremap <leader>. :Nack 
+nnoremap <leader>. :NoteFind 
 nnoremap <leader>- :Note 
-command! -nargs=1 Nack Ack "<args>" ~/desk/vimwiki/
-command! -nargs=1 Note :exe "e! " . fnameescape("~/desk/vimwiki/<args>.md")
+" New command for searching in my wiki.
+" Syntac: NoteFind pattern [markdownfile|pattern2]
+" if the markdownfile exist pattern is searched inside
+" if pattern2 the first grep for pattern2 and then pattern
+command -complete=custom,ListVimWiki -nargs=* NoteFind call NoteAck(<f-args>)
+function ListVimWiki(A,L,P)
+  return system("ls -1 ".g:vimWiki)
+endfun
+function NoteAck(...)
+  if a:0 > 1 
+    let p = g:vimWiki. a:2
+    if filereadable( p)
+      call ack#Ack( 'grep', '"'.a:1.'" '.g:vimWiki. a:2)
+    else
+      let list = systemlist('ack -l '.a:2.' '.g:vimWiki.'*')
+      let arg = '"'.a:1.'"'
+      for element in list
+        let arg = arg . ' "'.element.'"'
+      endfor
+      call ack#Ack( 'grep', arg)
+    endif
+  else
+    call ack#Ack( 'grep', '"'.a:1.'" '.g:vimWiki)
+  endif
+endfun
+"command! -nargs=1 Nack Ack "<args>" ~/desk/vimwiki/
+command! -nargs=1 Note :exe "e! " . fnameescape(g:vimwiki."<args>.md")
 nnoremap <C-N> :cnext<CR>
 nnoremap <C-P> :cprevious<CR>
 " }}}
@@ -579,12 +609,6 @@ function! Get_selected_text()
 endfunc
 vnoremap n :<c-u>let @/='\V'.escape(Get_selected_text(),'\')<cr><esc>nzz
 vnoremap <s-n> :<c-u>let @/=Get_selected_text()<cr><esc><s-n>zz
-" }}}
-" List manpage in new buffer {{{2
-runtime ftplugin/man.vim
-if has("gui_running")
-	nnoremap K :<C-U>exe "Man" v:count "<C-R><C-W>"<CR>
-endif
 " }}}
 " PrettyJSON {{{2
 command! -range=% JSON <line1>,<line2>call PrettyJSON()
