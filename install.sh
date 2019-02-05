@@ -27,7 +27,7 @@ if confirm "Should I pimp vim (.vim folder)? "; then
   cd ~
   ln -s $DIR/vim .vim
   cd $DIR/vim
-  ./install
+  ./install.sh
   cd $DIR
 fi
 
