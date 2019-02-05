@@ -35,12 +35,6 @@ if [ -d ~/.profile.d ]; then
   if confirm "Update .profile.d"; then
     ln -s $DIR/profile.d/tmux ~/.profile.d/tmux
   fi
-fi
-
-if [ -d ~/.profile.d ]; then
-  if confirm "Update .profile.d"; then
-    ln -s $DIR/profile.d/tmux ~/.profile.d/tmux
-  fi
 else
   if ! grep -q tmux "~/.profile" && confirm "Enable autostart of tmux? "; then
     cat $DIR/profile.d/tmux >> ~/.profile
