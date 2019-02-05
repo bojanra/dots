@@ -6,6 +6,5 @@ if [ -z "$TMUX" ]; then
      tmux attach-session -t remote) || \
     (tmux new-session -s remote) ) && exit 0
 else
-  turnkey-sysinfo
-  echo "  Version: "turnkey-version
+  [ -e /usr/bin/turnkey-version ] && turnkey-sysinfo &&  echo "  Version: "turnkey-version
 fi
