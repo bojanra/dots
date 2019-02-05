@@ -1,0 +1,11 @@
+# start tmux alias screen on login
+if [ -z "$TMUX" ]; then
+  echo "Recovering tmux session ..."
+  sleep 3
+  ( (tmux has-session -t remote && \
+     tmux attach-session -t remote) || \
+    (tmux new-session -s remote) ) && exit 0
+else
+  turnkey-sysinfo
+  echo "  Version: "turnkey-version
+fi
