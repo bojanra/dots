@@ -41,6 +41,13 @@ else
   fi
 fi
 
+if confirm "Make symbolic link to bashrc? "; then
+  cd ~
+  pwd
+  [ -f .bashrc ] && mv .bashrc .bashrc_origin
+  ln -s $DIR/bashrc .bashrc
+  cd $DIR
+fi
 
 
 
