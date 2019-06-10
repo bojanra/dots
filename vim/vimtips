@@ -151,6 +151,7 @@ g~~         invert case
 vEU         switch word to uppercase
 vE~         modify word case
 ggguG       set all text to lowercase
+gUiw        uppercase inner word
 :set ignorecase     ignore case in searches
 :set smartcase      ignore case in searches excepted if an uppercase letter is used
 
