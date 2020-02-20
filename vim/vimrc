@@ -58,16 +58,14 @@ Plugin 'plasticboy/vim-markdown'
 " Twig syntax highlighting
 Plugin 'lumiliet/vim-twig'
 " Javascript highlight
-" Plugin 'pangloss/vim-javascript'
+Plugin 'pangloss/vim-javascript'
 " Syntax checker
-" Plugin 'vim-syntastic/syntastic'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 " Show linenumbers only in active window"
 Plugin 'AssailantLF/vim-active-numbers'
 " Show color of tag
 Bundle 'https://github.com/gorodinskiy/vim-coloresque.git'
-" vue.js plugin
-Plugin 'posva/vim-vue'
 " Syntax for TOML
 Plugin 'cespare/vim-toml'
 " Colorscheme switcher
@@ -212,8 +210,6 @@ let mapleader = ","
 let maplocalleader = "."
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
-" save and check syntax
-nnoremap <leader>c :w<CR>:!perl -wc %<CR>
 " open vimrc file
 nnoremap <leader>e <C-w><C-v><C-l>:e ~/.vim/vimrc<CR>
 " open vimtips
@@ -239,10 +235,6 @@ map <leader>= <C-w>=
 imap <leader>= <Esc> <C-w>="
 " change working directory to location of current file
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
-" Tidy perl code
-nnoremap <leader>s :%!perltidy -q<CR>
-" Tidy/beautify javascript
-nnoremap <leader>J :%! js_beautify -s 2 -<CR>
 " Beautify JSON
 nnoremap <leader>j :%!json_pp<CR>
 vnoremap <leader>j :!json_pp<CR>
@@ -294,6 +286,8 @@ map <F2> :bprevious<cr>
 map <F3> :bnext<cr>
 map <C-tab> :bnext<cr>
 map <C-S-tab> :bprevious<cr>
+"Disable autoindent
+" map <F8> :setl noai nocin nosi inde=<cr>
 "Toggle wrap
 map <F6> :set wrap!<CR>
 " Open quickfix window
@@ -312,6 +306,9 @@ map <C-L> <C-W>l
 map <C-K> <C-W>k
 map <C-J> <C-W>j
 map <C-H> <C-W>h
+" Ctrl-A
+nnoremap <C-A> ggVGG
+vnoremap <C-A> ggVGG
 "Tip #153: Making Parenthesis And Brackets Handling Easier
 inoremap ( ()<ESC>i
 inoremap [ []<ESC>i
@@ -326,10 +323,11 @@ nnoremap K :<C-U>exe "Man" v:count "<C-R><C-W>"<CR>
 syntax on
 " Autocommands {{{1
 " Autoreload vimrc file on change
-augroup reload_vimrc " {
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END " }
+autocmd! bufwritepost ~/.vim/vimrc source %
+"augroup reload_vimrc " {
+"    autocmd!
+"    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+"augroup END " }
 " Higlight all occurences of word under cursor
 " autocmd CursorMoved * silent! exe printf('match IncSearch /\<%s\>/', expand('<cword>'))
 " Return to last edit position when opening files
@@ -340,9 +338,9 @@ autocmd BufReadPost *
 ""never see ^M again
 "autocmd BufRead * silent! %s/$//
 "autocmd BufRead * silent! %s/^M$//
-autocmd FileType perl setlocal tabstop=4
-autocmd FileType perl setlocal shiftwidth=4
 autocmd FileType vim setlocal foldmethod=marker
+autocmd FileType php setlocal shiftwidth=4 tabstop=4
+autocmd FileType javascript setlocal equalprg=js-beautify\ --stdin
 autocmd BufNewFile,BufRead  *.t setfiletype perl
 autocmd BufNewFile,BufRead *.t2t set ft=txt2tags
 autocmd BufNewFile,BufRead *.cfg set ft=ivg
@@ -355,15 +353,16 @@ autocmd BufRead,BufNewFile *.otl set filetype=votl
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.tt set filetype=html
 "autocmd BufRead,BufNewFile *.twig set filetype=html
-autocmd BufEnter,FileType *
-\ if has("gui_running") |
-\   if &ft ==# 'markdown' || &ft ==# 'votl' | colorscheme holokai |
-\   elseif &ft ==# 'vim' | colorscheme madeofcode |
-\   elseif &ft ==# 'perl' | colorscheme biogoo |
-\   elseif &ft ==# 'cpp' | colorscheme xcode |
-\   else | colorscheme leo |
-\   endif |
-\ endif
+autocmd BufWinEnter,FileType vim  colorscheme madeofcode
+autocmd BufWinEnter,FileType votl colorscheme holokai
+autocmd BufWinEnter,FileType cpp  colorscheme xcode
+autocmd BufWinEnter,FileType php  colorscheme summerfruit256
+autocmd BufWinEnter,FileType html colorscheme autumn
+autocmd BufWinEnter,FileType javascript colorscheme PaperColor
+" "autocmd BufWinEnter,FileType javascript colorscheme jellybeans
+autocmd BufWinEnter,FileType perl colorscheme biogoo
+
+" \   else | colorscheme ashen |
 " Save when losing focus
 au FocusLost * :silent! wall
 " Highlight redundant whitespaces and tabs.
@@ -403,6 +402,8 @@ function! QuoteDelim(char)
     return a:char.a:char."\<ESC>i"
   endif
 endf
+" Insert 8601 date
+command! Date :r !date --iso-8601=seconds
 " Highlight trailing whitespace " {{{2
 ""highlight ExtraWhitespace guibg=#bd5353 ctermbg=131
 ""augroup whitespace
@@ -467,7 +468,7 @@ function NoteAck(...)
   endif
 endfun
 "command! -nargs=1 Nack Ack "<args>" ~/desk/vimwiki/
-command! -nargs=1 Note :exe "e! " . fnameescape(g:vimwiki."<args>.md")
+command! -nargs=1 Note :exe "e! " . fnameescape(g:vimWiki."<args>.md")
 nnoremap <C-N> :cnext<CR>
 nnoremap <C-P> :cprevious<CR>
 " }}}
@@ -614,17 +615,9 @@ endfunc
 vnoremap n :<c-u>let @/='\V'.escape(Get_selected_text(),'\')<cr><esc>nzz
 vnoremap <s-n> :<c-u>let @/=Get_selected_text()<cr><esc><s-n>zz
 " }}}
-" PrettyJSON {{{2
-command! -range=% JSON <line1>,<line2>call PrettyJSON()
-function! PrettyJSON() range
-    exe a:firstline . "," . a:lastline . "!python2 -mjson.tool"
-endfun
-" format selected json
-"vnoremap <leader>j :JSON<CR>
-" }}} vim: fdm=marker
 " Add or subtract comments {{{2
 " Work out what the comment character is, by filetype...
-autocmd FileType             cpp,c                             let b:cmt = exists('b:cmt') ? b:cmt : '//'
+autocmd FileType             cpp,c,php                         let b:cmt = exists('b:cmt') ? b:cmt : '//'
 autocmd FileType             *sh,awk,python,perl,perl6,ruby    let b:cmt = exists('b:cmt') ? b:cmt : '#'
 autocmd FileType             vim                               let b:cmt = exists('b:cmt') ? b:cmt : '"'
 autocmd BufNewFile,BufRead   *.vim,.vimrc                      let b:cmt = exists('b:cmt') ? b:cmt : '"'
@@ -767,3 +760,4 @@ function! Undouble_Completions ()
     call setline('.', substitute(line, '\(\k\+\)\%'.col.'c\zs\1', '', ''))
 endfunction
 " }}}
+

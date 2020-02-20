@@ -33,6 +33,8 @@ Step back from jumps <C-o>ut forward <C-i>n
 :vim pattern *   search in all files
 :clist  :ccl
 
+:Date   insert date in ISO8601
+
 C++
 -------------
 gd - goto variable definition
@@ -49,7 +51,7 @@ Autocomplete line by context <C-xl>
 Jump tag function definition - ctags <^]> globally g^]
 bakc ^t
 
-Search/replace insert wor under curosr C-r C-w
+Search/replace insert word under cursor C-r C-w
 
 Run ctags in project route > ctags -R --exclude=.git .
 
@@ -75,6 +77,13 @@ Execute:
 tabs ~ \t
 newline ~ \n  when searching or on the left-hand-side of a substitute
 newline ~ \r  when inserting a newline with a substitute (right-hand-side)
+
+:copen " Open the quickfix window
+:ccl   " Close it
+:cw    " Open it if there are "errors", close it otherwise (some people prefer this)
+:cn    " Go to the next error in the window
+:cp    " Go to the previous error in the window
+:cnf   " Go to the first error in the next file
 
 In regexes, you have to escape ?, | and +.
 :bufdo /searchstr/ multi-buffer search
@@ -183,7 +192,7 @@ gf      open file name under cursor
 :­nly       close all windows, excepted current
 
 = register =
-"         store in register
+"         copy/store in register
 "byy      store line in register b
 "bp       paster register b
 
