@@ -1,8 +1,8 @@
 " PERL
 " Tidy/beautify code
-nnoremap <leader>s :%!perltidy -q<CR>
+nnoremap <leader>s ms:%!perltidy -q<CR>'s
 " Check syntax - save first
 nnoremap <leader>c :w<CR>:!perl -wc %<CR>
 "
-setlocal tabstop=2
-setlocal shiftwidth=2
+setlocal tabstop=4
+setlocal shiftwidth=4

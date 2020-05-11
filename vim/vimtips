@@ -2,23 +2,26 @@
 ,fml  show <leader> mappings
 ,= - adjust viewports to same size        | uu - _
 ,a - run Ack (grep)                       | hh - =>
-,b - CtrlP search filename in buffer list | aa - @
+,s - beautify code                        | aa - @
 ,c - check PERL syntax of current file    | Q - gq (format text)
 ,<CR> - hide highlighted elements         | <SPACE> - / (search)
 ,e - edit .vimrc file                     | jj - exit inser mode 
-,f - CtrlP search filename in directory   | :w!! - save file opened in read-only mode
-,F - CtrlP search filename in file hist.  | di(     - delete inside ()
+,f - toggle quickfix list                 | :w!! - save file opened in read-only mode
+,l - toggle location list                 | di(     - delete inside ()
 ,j - format json                          | dtX     - delete to X
 ,m - start NERDTree Focus on current file | gf      - open file under cursor in same window
 ,n - start NERDTree                       | C-Wf - open file under cursor in other window
-                                          | [I find word under cursor in include - [tab -jump there
+,sc - toggle scratch                      | [I find word under cursor in include - [tab -jump there
 ,q - close current buffer(file)           |
 ,, - switch between last two buffers      | zz      - move text to middle of screen
-,<tab> - toggle Tagbar                    | F       - show function name
+,rl - execute current line in shell       | F       - show function name
 ,t - toggle Tagbar                        | zi      - toggle folding
 ,cd - change dir to cur. file             | zc      - close fold under cursor
-,v - show vim tips&tricks file            | mk 	Marks current position as k
+,v - show vim tips&tricks file            | mk 	Marks current position as k (uppercase are global)
 ,w - remove trailing spaces               | 'k 	Moves cursor to mark k
+,. - Note find
+,- - New Note
+:Errors  - show syntastic errors in location list
 ^xp - autocomplete word context           | paste register 'm' to commandline <C-r>m
 ^xl - autocomplete whole line             | copy ex-command to buffer ":p
 ^xf - filename completition               | ~ uppercase char under cursor
@@ -68,7 +71,7 @@ cv --> change variable...   zz --> toggle folding
 gd --> goto definition...   zp --> toggle proc folding
 tt --> toggle tracking...   za --> toggle proc+comment folding
 
-Record:
+Record macro:
 q<letter><commands>q
 Execute:
 <number>@<letter>
@@ -88,6 +91,10 @@ newline ~ \r  when inserting a newline with a substitute (right-hand-side)
 In regexes, you have to escape ?, | and +.
 :bufdo /searchstr/ multi-buffer search
 /fred\|joe 		Search for FRED OR JOE
+Multifile replace
+:args test/*.php        #select files
+:argdo %s/this/that/c   #do the replace
+:argdo normal @a        #run macro a
 vim - modelines
 /* vim: tw=60 ts=2: */
 edit file over ssh

@@ -18,7 +18,7 @@ Plugin 'scrooloose/nerdtree'
 " ack the better grep from within vim :Ack
 Plugin 'mileszs/ack.vim'
 " show the list of buffers in the command bar
-Plugin 'bling/vim-bufferline'
+" "Plugin 'bling/vim-bufferline'
 " JSON Highlightning
 Plugin 'elzr/vim-json'
 " Extended % matching also for html
@@ -61,7 +61,7 @@ Plugin 'lumiliet/vim-twig'
 Plugin 'pangloss/vim-javascript'
 " Syntax checker
 Plugin 'vim-syntastic/syntastic'
-Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline'
 " Show linenumbers only in active window"
 Plugin 'AssailantLF/vim-active-numbers'
 " Show color of tag
@@ -73,6 +73,8 @@ Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-colorscheme-switcher'
 " TextMate's snippet expansion emulation
 Plugin 'vim-scripts/snippetsEmu'
+" Toggle quickfix window
+Plugin 'milkypostman/vim-togglelist'
 " All of your Plugins must be added before the following line
 filetype plugin indent on    " required
 filetype indent on
@@ -162,6 +164,7 @@ if has('gui_running')
   cnoremap <M-Space> <C-C>:simalt ~<CR>
   "set guifont=Monaco\ 11
   set guifont=Inconsolata\ 12
+"  set guifont=Inconsolata\ for\ Powerline\ 12
 "
 "  colorscheme atom
 "  set background=dark
@@ -193,17 +196,17 @@ else
   highlight nonText ctermbg=NONE
 endif
 " Statusline - must be after colorscheme commmand {{{2
-set statusline=%t       "tail of the filename
-set statusline+=%h      "help file flag
-set statusline+=%m      "modified flag
-set statusline+=%r      "read only flag
-set statusline+=%=      "left/right separator
-set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
-set statusline+=%{&ff}] "file format
-set statusline+=%y      "filetype
-set statusline+=%c,     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set statusline+=\ %P    "percent through file
+"set statusline=%t       "tail of the filename
+"set statusline+=%h      "help file flag
+"set statusline+=%m      "modified flag
+"set statusline+=%r      "read only flag
+"set statusline+=%=      "left/right separator
+"set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+"set statusline+=%{&ff}] "file format
+"set statusline+=%y      "filetype
+"set statusline+=%c,     "cursor column
+"set statusline+=%l/%L   "cursor line/total lines
+"set statusline+=\ %P    "percent through file
 " Leadder stuff {{{1
 " define leader
 let mapleader = ","
@@ -224,8 +227,6 @@ nmap <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
 nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
 " Switch between last two buffers
 nnoremap <leader><leader> <C-^>
-" grep in directory (instead of ack)
-" nnoremap <leader>a :vimgrep /\(<c-r>=expand("<cword>")<cr>\)/ *
 " Scratch buffer
 nnoremap <Leader>sc :e scratch<CR>:setlocal readonly<CR>
 " Run/execute current line in shell
@@ -238,6 +239,7 @@ nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " Beautify JSON
 nnoremap <leader>j :%!json_pp<CR>
 vnoremap <leader>j :!json_pp<CR>
+" <leader>t and <leader>q are defined by plugin for quickfiw window"
 " Mappings {{{1
 " when you forgot to sudo before editing a file that requires root privileges
 cmap w!! w !sudo tee % >/dev/null
@@ -266,6 +268,7 @@ imap aa @
 "cmap W w
 cmap WQ wq
 cmap wQ wq
+cmap W w
 " use Q for formatting
 "map  Q gq
 "vmap Q gq
@@ -306,9 +309,6 @@ map <C-L> <C-W>l
 map <C-K> <C-W>k
 map <C-J> <C-W>j
 map <C-H> <C-W>h
-" Ctrl-A
-nnoremap <C-A> ggVGG
-vnoremap <C-A> ggVGG
 "Tip #153: Making Parenthesis And Brackets Handling Easier
 inoremap ( ()<ESC>i
 inoremap [ []<ESC>i
@@ -339,7 +339,6 @@ autocmd BufReadPost *
 "autocmd BufRead * silent! %s/$//
 "autocmd BufRead * silent! %s/^M$//
 autocmd FileType vim setlocal foldmethod=marker
-autocmd FileType php setlocal shiftwidth=4 tabstop=4
 autocmd FileType javascript setlocal equalprg=js-beautify\ --stdin
 autocmd BufNewFile,BufRead  *.t setfiletype perl
 autocmd BufNewFile,BufRead *.t2t set ft=txt2tags
@@ -358,9 +357,11 @@ autocmd BufWinEnter,FileType votl colorscheme holokai
 autocmd BufWinEnter,FileType cpp  colorscheme xcode
 autocmd BufWinEnter,FileType php  colorscheme summerfruit256
 autocmd BufWinEnter,FileType html colorscheme autumn
-autocmd BufWinEnter,FileType javascript colorscheme PaperColor
+"autocmd BufWinEnter,FileType javascript colorscheme summerfruit256
+autocmd BufWinEnter,FileType javascript colorscheme tesla
 " "autocmd BufWinEnter,FileType javascript colorscheme jellybeans
 autocmd BufWinEnter,FileType perl colorscheme biogoo
+"autocmd BufWinEnter,FileType perl colorscheme madeofcode
 
 " \   else | colorscheme ashen |
 " Save when losing focus
@@ -413,6 +414,8 @@ command! Date :r !date --iso-8601=seconds
 ""    au BufWrite * match ExtraWhitespace /\s\+$\| \+\ze\t/
 ""augroup end
 " Plugin configuration {{{1
+" vim-airline {{{2
+" let g:airline_powerline_fonts = 1
 " NERDTree {{{2
 " close NERDTree after a file is opened
 " let g:NERDTreeQuitOnOpen=1
@@ -486,7 +489,6 @@ let g:vim_markdown_folding_disabled=0
 let g:vim_markdown_folding_level = 2
 " Tagbar {{{2
 nnoremap <leader>t :TagbarToggle<CR>
-map <leader><Tab> :TagbarToggle<CR>"
 " Closetag {{{2
 " Prevent building stack for other filetypes
 autocmd FileType html,php let b:closetag_html_style=1
@@ -500,6 +502,14 @@ nmap <C-c><C-c> <Plug>NormalModeSendToTmux
 nmap <C-c>r <Plug>SetTmuxVars
 " snippetsEmu {{{2
 let g:snippetsEmu_key = "<S-Tab>"
+" syntastic {{{2 
+"let g:syntastic_php_checkers = ["php", "phpcs", "phpmd"]
+let g:syntastic_php_checkers = ["php"]
+
+" vim-togglelist {{{2 
+let g:toggle_list_no_mappings = 1
+nmap <script> <silent> <leader>l :call ToggleLocationList()<CR>
+nmap <script> <silent> <leader>f :call ToggleQuickfixList()<CR>
 " Functions {{{1
 " InsertTabWrapper {{{2
 "Use <tab> and <shift-tab> in insert mode for autocompletition, except when at start of line
@@ -617,7 +627,7 @@ vnoremap <s-n> :<c-u>let @/=Get_selected_text()<cr><esc><s-n>zz
 " }}}
 " Add or subtract comments {{{2
 " Work out what the comment character is, by filetype...
-autocmd FileType             cpp,c,php                         let b:cmt = exists('b:cmt') ? b:cmt : '//'
+autocmd FileType             cpp,c,php,javascript              let b:cmt = exists('b:cmt') ? b:cmt : '//'
 autocmd FileType             *sh,awk,python,perl,perl6,ruby    let b:cmt = exists('b:cmt') ? b:cmt : '#'
 autocmd FileType             vim                               let b:cmt = exists('b:cmt') ? b:cmt : '"'
 autocmd BufNewFile,BufRead   *.vim,.vimrc                      let b:cmt = exists('b:cmt') ? b:cmt : '"'
