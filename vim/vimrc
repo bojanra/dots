@@ -58,10 +58,10 @@ Plugin 'plasticboy/vim-markdown'
 " Twig syntax highlighting
 Plugin 'lumiliet/vim-twig'
 " Javascript highlight
-Plugin 'pangloss/vim-javascript'
+"Plugin 'pangloss/vim-javascript'
 " Syntax checker
 Plugin 'vim-syntastic/syntastic'
-"Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline'
 " Show linenumbers only in active window"
 Plugin 'AssailantLF/vim-active-numbers'
 " Show color of tag
@@ -356,9 +356,10 @@ autocmd BufWinEnter,FileType vim  colorscheme madeofcode
 autocmd BufWinEnter,FileType votl colorscheme holokai
 autocmd BufWinEnter,FileType cpp  colorscheme xcode
 autocmd BufWinEnter,FileType php  colorscheme summerfruit256
-autocmd BufWinEnter,FileType html colorscheme autumn
+"autocmd BufWinEnter,FileType html colorscheme autumn
+autocmd BufWinEnter,FileType html colorscheme thor
 "autocmd BufWinEnter,FileType javascript colorscheme summerfruit256
-autocmd BufWinEnter,FileType javascript colorscheme tesla
+autocmd BufWinEnter,FileType javascript colorscheme thor
 " "autocmd BufWinEnter,FileType javascript colorscheme jellybeans
 autocmd BufWinEnter,FileType perl colorscheme biogoo
 "autocmd BufWinEnter,FileType perl colorscheme madeofcode
@@ -415,10 +416,10 @@ command! Date :r !date --iso-8601=seconds
 ""augroup end
 " Plugin configuration {{{1
 " vim-airline {{{2
-" let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 " NERDTree {{{2
 " close NERDTree after a file is opened
-" let g:NERDTreeQuitOnOpen=1
+let g:NERDTreeQuitOnOpen=1
 " Toggle the file browser
 nnoremap <leader>n :NERDTreeToggle .<CR>
 " Find the current file in the file browser
