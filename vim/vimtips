@@ -36,10 +36,13 @@ Step back from jumps <C-o>ut forward <C-i>n
 :vim pattern *   search in all files
 :clist  :ccl
 
+Signature for debian
+debsig + return
+
 :Date   insert date in ISO8601
 
-C++
--------------
+C++                                              paste last yanked selection in search buffer C-R 0
+-------------                                    search for yanked selection  q / p
 gd - goto variable definition
 [{ - goto begin of current scope
 gr - replace variable under cursor

@@ -1,5 +1,6 @@
 --standard-error-output
 # --backup-and-modify-in-place
+# --character-encoding=none
 
 --iterations=2
 
