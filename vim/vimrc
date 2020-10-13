@@ -13,12 +13,10 @@ call vundle#rc()
 Plugin 'gmarik/Vundle.vim'
 " A fancy file browser press <leader> n
 Plugin 'scrooloose/nerdtree'
-" Restore last open session, but only if more than 1 buffer were open
-" Plugin 'powerman/vim-plugin-autosess'
+" Ranger file manager
+"Plugin 'rafaqz/ranger.vim'
 " ack the better grep from within vim :Ack
 Plugin 'mileszs/ack.vim'
-" show the list of buffers in the command bar
-" "Plugin 'bling/vim-bufferline'
 " JSON Highlightning
 Plugin 'elzr/vim-json'
 " Extended % matching also for html
@@ -73,6 +71,8 @@ Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-colorscheme-switcher'
 " TextMate's snippet expansion emulation
 Plugin 'vim-scripts/snippetsEmu'
+" TabNine autocomplete
+Plugin 'zxqfl/tabnine-vim'
 " Toggle quickfix window
 Plugin 'milkypostman/vim-togglelist'
 " All of your Plugins must be added before the following line
@@ -163,8 +163,8 @@ if has('gui_running')
   inoremap <M-Space> <C-O>:simalt ~<CR>
   cnoremap <M-Space> <C-C>:simalt ~<CR>
   "set guifont=Monaco\ 11
-  set guifont=Inconsolata\ 12
-"  set guifont=Inconsolata\ for\ Powerline\ 12
+""  set guifont=Inconsolata\ 12
+  set guifont=Inconsolata\ for\ Powerline\ 12
 "
 "  colorscheme atom
 "  set background=dark
@@ -239,7 +239,6 @@ nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " Beautify JSON
 nnoremap <leader>j :%!json_pp<CR>
 vnoremap <leader>j :!json_pp<CR>
-" <leader>t and <leader>q are defined by plugin for quickfiw window"
 " Mappings {{{1
 " when you forgot to sudo before editing a file that requires root privileges
 cmap w!! w !sudo tee % >/dev/null

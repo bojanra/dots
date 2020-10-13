@@ -155,4 +155,12 @@ alias root="sudo su -"
 alias bigdirs='du --max-depth=1 2> /dev/null | sort -n -r | head -n20'
 
 # autochange directory without cd
+# - type the directory name to change into
 shopt -s autocd
+
+# McFly - fly through your shell history
+# https://github.com/cantino/mcfly
+if [[ -r ~/desk/bin/scripts/mcfly.bash ]]; then
+  source  ~/desk/bin/scripts/mcfly.bash
+fi
+
