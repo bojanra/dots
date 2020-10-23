@@ -12,7 +12,6 @@ function confirm() {
     fi
 }
 
-
 if confirm "Make symbolic links to (tmux.conf, perltidyrc, astylerc, ackrc)? "; then
   cd ~
   pwd
@@ -49,5 +48,19 @@ if confirm "Make symbolic link to bashrc? "; then
   cd $DIR
 fi
 
+if confirm "Create ~/bin directory? "; then
+  cd ~
+  mkdir bin
+fi
 
-
+if [ -d ~/bin ]; then
+  if confirm "Make symbolic link to git extension scripts?"; then
+    for FI in $DIR/bin/* ; do
+      ln -s $FI ~/bin/
+    done
+  fi
+  if confirm "Make symbolic link for McFly bash script?"; then
+    ln -s $DIR/bin/mcfly.bash ~/bin/
+    echo "Don't forget to install the McFly binary from https://github.com/cantino/mcfly/releases"
+  fi
+fi

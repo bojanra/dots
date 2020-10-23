@@ -160,7 +160,7 @@ shopt -s autocd
 
 # McFly - fly through your shell history
 # https://github.com/cantino/mcfly
-if [[ -r ~/desk/bin/scripts/mcfly.bash ]]; then
-  source  ~/desk/bin/scripts/mcfly.bash
+if [[ -r ~/bin/mcfly.bash ]]; then
+  source  ~/bin/mcfly.bash
 fi
 

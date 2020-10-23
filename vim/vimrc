@@ -73,6 +73,8 @@ Plugin 'xolox/vim-colorscheme-switcher'
 Plugin 'vim-scripts/snippetsEmu'
 " TabNine autocomplete
 Plugin 'zxqfl/tabnine-vim'
+" Connect to SQL database
+"Plugin 'tpope/vim-dadbod'
 " Toggle quickfix window
 Plugin 'milkypostman/vim-togglelist'
 " All of your Plugins must be added before the following line
@@ -227,6 +229,8 @@ nmap <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
 nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
 " Switch between last two buffers
 nnoremap <leader><leader> <C-^>
+" Format SQL
+vnoremap <Leader>sql :!sqlformat --reindent --keywords upper --identifiers lower -<CR>
 " Scratch buffer
 nnoremap <Leader>sc :e scratch<CR>:setlocal readonly<CR>
 " Run/execute current line in shell
@@ -529,7 +533,7 @@ function! InsertTabWrapper(direction)
 "        return pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete('buffer')
     endif
 endfunction
-inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
+"inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
 "inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
 " }}}
 " ShowFuncName - show current function name by pressing F {{{2
