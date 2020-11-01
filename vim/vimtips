@@ -36,6 +36,8 @@ Step back from jumps <C-o>ut forward <C-i>n
 :vim pattern *   search in all files
 :clist  :ccl
 
+reload file with different encoding :e ++enc=<encoding>
+
 Signature for debian
 debsig + return
 

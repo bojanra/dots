@@ -491,16 +491,20 @@ au BufEnter *.org            call org#SetOrgFileType()
 " let g:org_capture_file = '~/org_files/mycaptures.org'
 command! OrgCapture :call org#CaptureBuffer()
 command! OrgCaptureFile :call org#OpenCaptureFile()
+
 " Markdown {{{2
 let g:vim_markdown_folding_disabled=0
 " Level shown when all folds are closed
 let g:vim_markdown_folding_level = 2
+
 " Tagbar {{{2
 nnoremap <leader>t :TagbarToggle<CR>
+
 " Closetag {{{2
 " Prevent building stack for other filetypes
 autocmd FileType html,php let b:closetag_html_style=1
 autocmd FileType html,php source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+
 " tslime {{{2
 " send commands to tmux
 " let g:tslime_always_current_session = 1
@@ -508,16 +512,23 @@ autocmd FileType html,php source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
 vmap <C-c><C-c> <Plug>SendSelectionToTmux
 nmap <C-c><C-c> <Plug>NormalModeSendToTmux
 nmap <C-c>r <Plug>SetTmuxVars
+
 " snippetsEmu {{{2
 let g:snippetsEmu_key = "<S-Tab>"
+
 " syntastic {{{2 
-"let g:syntastic_php_checkers = ["php", "phpcs", "phpmd"]
+" let g:syntastic_php_checkers = ["php", "phpcs", "phpmd"]
 let g:syntastic_php_checkers = ["php"]
+
+" TabNine {{{2 
+" toggle autocomplete
+nnoremap <leader>9 :let g:ycm_auto_trigger=!g:ycm_auto_trigger<CR>
 
 " vim-togglelist {{{2 
 let g:toggle_list_no_mappings = 1
 nmap <script> <silent> <leader>l :call ToggleLocationList()<CR>
 nmap <script> <silent> <leader>f :call ToggleQuickfixList()<CR>
+"
 " Functions {{{1
 " InsertTabWrapper {{{2
 "Use <tab> and <shift-tab> in insert mode for autocompletition, except when at start of line
