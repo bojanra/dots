@@ -73,6 +73,8 @@ Plugin 'xolox/vim-colorscheme-switcher'
 Plugin 'vim-scripts/snippetsEmu'
 " TabNine autocomplete
 Plugin 'zxqfl/tabnine-vim'
+" Mikrotik syntax
+" Plugin 'zainin/vim-mikrotik'
 " Connect to SQL database
 "Plugin 'tpope/vim-dadbod'
 " Toggle quickfix window
@@ -167,6 +169,8 @@ if has('gui_running')
   "set guifont=Monaco\ 11
 ""  set guifont=Inconsolata\ 12
   set guifont=Inconsolata\ for\ Powerline\ 12
+"  set guifont=Inconsolata\ for\ Powerline\ 17
+  
 "
 "  colorscheme atom
 "  set background=dark
@@ -213,6 +217,7 @@ endif
 " define leader
 let mapleader = ","
 let maplocalleader = "."
+set timeoutlen=400       "timout for waiting for next char
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 " open vimrc file
@@ -354,6 +359,7 @@ autocmd BufRead,BufNewFile *.ino set filetype=c
 autocmd BufRead,BufNewFile *.otl set filetype=votl
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.tt set filetype=html
+autocmd BufRead,BufNewFile *.html.ep set filetype=html
 "autocmd BufRead,BufNewFile *.twig set filetype=html
 autocmd BufWinEnter,FileType vim  colorscheme madeofcode
 autocmd BufWinEnter,FileType votl colorscheme holokai
@@ -440,7 +446,7 @@ let g:ack_autofold_results = 1
 let g:ackpreview = 1
 " VimWiki and My notetaking {{{2
 let wiki_1 = {}
-let wiki_1.path = '~/desk/vimwiki/'
+let wiki_1.path = '~/desk/notes/'
 let wiki_1.syntax = 'markdown'
 let wiki_1.ext = '.md'
 let wiki_2 = {}
@@ -448,7 +454,7 @@ let wiki_2.path = '~/desk/tmp/'
 let wiki_2.syntax = 'markdown'
 let wiki_2.ext = '.md'
 let g:vimwiki_list = [wiki_1, wiki_2]
-let g:vimWiki = '/home/ramsakb/desk/vimwiki/'
+let g:vimWiki = '/home/ramsakb/desk/notes/'
 "let g:vimwiki_list = [{'path': '~/.vim/notes/', 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 nnoremap <leader>. :NoteFind 
@@ -478,7 +484,6 @@ function NoteAck(...)
     call ack#Ack( 'grep', '"'.a:1.'" '.g:vimWiki)
   endif
 endfun
-"command! -nargs=1 Nack Ack "<args>" ~/desk/vimwiki/
 command! -nargs=1 Note :exe "e! " . fnameescape(g:vimWiki."<args>.md")
 nnoremap <C-N> :cnext<CR>
 nnoremap <C-P> :cprevious<CR>
@@ -517,8 +522,9 @@ nmap <C-c>r <Plug>SetTmuxVars
 let g:snippetsEmu_key = "<S-Tab>"
 
 " syntastic {{{2 
-" let g:syntastic_php_checkers = ["php", "phpcs", "phpmd"]
-let g:syntastic_php_checkers = ["php"]
+" let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+let g:syntastic_php_checkers = ['php']
+let g:syntastic_javascript_checkers=['jshint']
 
 " TabNine {{{2 
 " toggle autocomplete

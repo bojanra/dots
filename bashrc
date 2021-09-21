@@ -129,7 +129,8 @@ alias j='jobs -l'
 # alias which='type -a'
 # alias ..='cd ..'
 alias less='less -i'
-alias duu='du -s * | sort -n'
+# alias duu='du -s * | sort -n'
+alias duu='du -mcs * .[!.]* | sort -n'
 #alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
 alias c='clear'
 alias mgrep="ps aux | grep -v grep | grep"
@@ -153,10 +154,13 @@ alias path='echo -e ${PATH//:/\\n}'
 alias vi=vim
 alias root="sudo su -"
 alias bigdirs='du --max-depth=1 2> /dev/null | sort -n -r | head -n20'
+alias locate='locate -i'
 
 # autochange directory without cd
 # - type the directory name to change into
 shopt -s autocd
+
+export EDITOR=/usr/bin/vim
 
 # McFly - fly through your shell history
 # https://github.com/cantino/mcfly

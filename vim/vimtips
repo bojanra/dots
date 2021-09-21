@@ -5,7 +5,7 @@
 ,s - beautify code                        | aa - @
 ,c - check PERL syntax of current file    | Q - gq (format text)
 ,<CR> - hide highlighted elements         | <SPACE> - / (search)
-,e - edit .vimrc file                     | jj - exit inser mode 
+,e - edit .vimrc file                     | jj - exit inser mode
 ,f - toggle quickfix list                 | :w!! - save file opened in read-only mode
 ,l - toggle location list                 | di(     - delete inside ()
 ,j - format json                          | dtX     - delete to X
@@ -32,9 +32,12 @@ Switch off linebreak    | tslime
 :set lbr                | clear vars <C-c>r | show pane numbers in tmux leader q
 
 Step back from jumps <C-o>ut forward <C-i>n
-:vim pattern %   Search in current file and place in Quickfix  
+:vim pattern %   Search in current file and place in Quickfix
 :vim pattern *   search in all files
 :clist  :ccl
+
+multiline edit: search with / then cgn  edit and .
+https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
 
 reload file with different encoding :e ++enc=<encoding>
 
