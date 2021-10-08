@@ -12,9 +12,7 @@ call vundle#rc()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 " A fancy file browser press <leader> n
-Plugin 'scrooloose/nerdtree'
-" Ranger file manager
-"Plugin 'rafaqz/ranger.vim'
+"Plugin 'scrooloose/nerdtree'
 " ack the better grep from within vim :Ack
 Plugin 'mileszs/ack.vim'
 " JSON Highlightning
@@ -141,7 +139,10 @@ set undofile      " create undofiles
 set undolevels=1000      " use many muchos levels of undo
 set visualbell    " don't beep
 set wildignore=*.swp,*.bak,*.pyc,*.class
-set wildmode=list:longest "file/command completion useful
+"set wildmode=list:longest "file/command completion useful
+set wildmode=longest,list,full
+" Fix splitting
+set splitbelow splitright
 set clipboard=unnamedplus  "use system clipboard by default
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
@@ -170,7 +171,7 @@ if has('gui_running')
 ""  set guifont=Inconsolata\ 12
   set guifont=Inconsolata\ for\ Powerline\ 12
 "  set guifont=Inconsolata\ for\ Powerline\ 17
-  
+  set guifont=FantasqueSansMono\ Nerd\ Font\ Mono\ Regular\ 12
 "
 "  colorscheme atom
 "  set background=dark
@@ -332,10 +333,8 @@ syntax on
 " Autocommands {{{1
 " Autoreload vimrc file on change
 autocmd! bufwritepost ~/.vim/vimrc source %
-"augroup reload_vimrc " {
-"    autocmd!
-"    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-"augroup END " }
+" Remove trailing whitespace on save
+autocmd BufWritePre * %s/\s\+$//e
 " Higlight all occurences of word under cursor
 " autocmd CursorMoved * silent! exe printf('match IncSearch /\<%s\>/', expand('<cword>'))
 " Return to last edit position when opening files
@@ -457,8 +456,8 @@ let g:vimwiki_list = [wiki_1, wiki_2]
 let g:vimWiki = '/home/ramsakb/desk/notes/'
 "let g:vimwiki_list = [{'path': '~/.vim/notes/', 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-nnoremap <leader>. :NoteFind 
-nnoremap <leader>- :Note 
+nnoremap <leader>. :NoteFind
+nnoremap <leader>- :Note
 " New command for searching in my wiki.
 " Syntac: NoteFind pattern [markdownfile|pattern2]
 " if the markdownfile exist pattern is searched inside
@@ -468,7 +467,7 @@ function ListVimWiki(A,L,P)
   return system("ls -1 ".g:vimWiki)
 endfun
 function NoteAck(...)
-  if a:0 > 1 
+  if a:0 > 1
     let p = g:vimWiki. a:2
     if filereadable( p)
       call ack#Ack( 'grep', '"'.a:1.'" '.g:vimWiki. a:2)
@@ -521,16 +520,16 @@ nmap <C-c>r <Plug>SetTmuxVars
 " snippetsEmu {{{2
 let g:snippetsEmu_key = "<S-Tab>"
 
-" syntastic {{{2 
+" syntastic {{{2
 " let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_php_checkers = ['php']
 let g:syntastic_javascript_checkers=['jshint']
 
-" TabNine {{{2 
+" TabNine {{{2
 " toggle autocomplete
 nnoremap <leader>9 :let g:ycm_auto_trigger=!g:ycm_auto_trigger<CR>
 
-" vim-togglelist {{{2 
+" vim-togglelist {{{2
 let g:toggle_list_no_mappings = 1
 nmap <script> <silent> <leader>l :call ToggleLocationList()<CR>
 nmap <script> <silent> <leader>f :call ToggleQuickfixList()<CR>

@@ -168,3 +168,5 @@ if [[ -r ~/bin/mcfly.bash ]]; then
   source  ~/bin/mcfly.bash
 fi
 
+# icon support for lf  based on nerd font
+[ -f ~/.config/lf/icons ] && source ~/.config/lf/icons
