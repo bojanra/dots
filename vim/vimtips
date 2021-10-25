@@ -26,8 +26,8 @@
 ^xl - autocomplete whole line             | copy ex-command to buffer ":p
 ^xf - filename completition               | ~ uppercase char under cursor
 ^xo - method                              | search to next/previous occurence of char t T char or f F char
-Switch colorscheme with F8, S-F8, A-F8
-Switch off linebreak    | tslime
+Switch colorscheme with F8, S-F8, A-F8    | :-16,-14co.  copy lines from above here
+Switch off linebreak    | tslime - tmux
 :set formatoptions=l    | execute <C-c><C-c>
 :set lbr                | clear vars <C-c>r | show pane numbers in tmux leader q
 
@@ -36,6 +36,8 @@ Step back from jumps <C-o>ut forward <C-i>n
 :vim pattern *   search in all files
 :clist  :ccl
 
+H M L - high medium low position
+- open netgw   |  ^6 close netgw
 multiline edit: search with / then cgn  edit and .
 https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
 

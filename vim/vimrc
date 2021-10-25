@@ -12,7 +12,7 @@ call vundle#rc()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 " A fancy file browser press <leader> n
-"Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 " ack the better grep from within vim :Ack
 Plugin 'mileszs/ack.vim'
 " JSON Highlightning
@@ -23,60 +23,41 @@ Plugin 'tmhedberg/matchit'
 Plugin 'docunext/closetag.vim'
 inoremap <C-_> <C-R>=GetCloseTag()<CR>
 map <C-_> a<C-_><ESC>
-" Tagbar :Tagbar replacement for vim-scripts/taglist.vim
-Plugin 'majutsushi/tagbar'
+" Tagbar :Tagbar
+Plugin 'preservim/tagbar'
+" vimwiki
+Plugin 'vimwiki/vimwiki'
 " Many many coloschemas
 Plugin 'flazz/vim-colorschemes'
 " Show git diff
 Plugin 'airblade/vim-gitgutter'
-" Vim two-pane outliner
-" Plugin 'vim-voom/VOoM'
-" A calendar application for Vim
-" Plugin 'mattn/calendar-vim'
-" Narrow Region Plugin
-" "Plugin 'chrisbra/NrrwRgn'
-" VimOrganizer a clone of Emacs' Org-mode
-" Plugin 'hsitz/VimOrganizer'
-" A wiki with vim for notetaking
-" Plugin 'vimwiki/vimwiki'
 " The VIM Outliner fork of vimoutliner/vimoutliner.git
-"Plugin 'insanum/votl'
 Plugin 'vimoutliner/vimoutliner.git'
 " Time tracker use :TimeTap to show stats
 Plugin 'rainerborene/vim-timetap.git'
-" Pomodoro plugin
-"Plugin 'vim-scripts/vim-pomodoro'
 " Syntax highlighting, matching rules and mappings for the original Markdown and extensions
-Plugin 'godlygeek/tabular'
+"Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
-" Lilypond highlighting"
-"Plugin 'gisraptor/vim-lilypond-integrator'
-" Twig syntax highlighting
-Plugin 'lumiliet/vim-twig'
-" Javascript highlight
-"Plugin 'pangloss/vim-javascript'
 " Syntax checker
 Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 " Show linenumbers only in active window"
 Plugin 'AssailantLF/vim-active-numbers'
 " Show color of tag
-Bundle 'https://github.com/gorodinskiy/vim-coloresque.git'
+Plugin 'gorodinskiy/vim-coloresque.git'
 " Syntax for TOML
 Plugin 'cespare/vim-toml'
 " Colorscheme switcher
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-colorscheme-switcher'
-" TextMate's snippet expansion emulation
-Plugin 'vim-scripts/snippetsEmu'
 " TabNine autocomplete
 Plugin 'zxqfl/tabnine-vim'
 " Mikrotik syntax
 " Plugin 'zainin/vim-mikrotik'
-" Connect to SQL database
-"Plugin 'tpope/vim-dadbod'
 " Toggle quickfix window
 Plugin 'milkypostman/vim-togglelist'
+" naviagtion
+Plugin 'tpope/vim-vinegar'
 " All of your Plugins must be added before the following line
 filetype plugin indent on    " required
 filetype indent on
@@ -192,6 +173,7 @@ if has('gui_running')
 "  set background=dark
 "
   colorscheme ashen
+"  colorscheme asmanian2
   set background=light
 "  set lines=35 columns=150
 else
@@ -325,8 +307,6 @@ inoremap {<CR> {<CR>}<ESC>ko
 inoremap { {}<ESC>i
 " quick refactoring: replace keyword under cursor
 nnoremap gr gD:%s/<C-R>///c<left><left><left>
-" nmap <expr> M ':%s/' . @/ . '//g<LEFT><LEFT>'
-" vmap <expr> M ':s/' . @/ . '//g<LEFT><LEFT>'
 "runtime ftplugin/man.vim
 nnoremap K :<C-U>exe "Man" v:count "<C-R><C-W>"<CR>
 syntax on
@@ -516,15 +496,10 @@ autocmd FileType html,php source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
 vmap <C-c><C-c> <Plug>SendSelectionToTmux
 nmap <C-c><C-c> <Plug>NormalModeSendToTmux
 nmap <C-c>r <Plug>SetTmuxVars
-
-" snippetsEmu {{{2
-let g:snippetsEmu_key = "<S-Tab>"
-
 " syntastic {{{2
 " let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_php_checkers = ['php']
 let g:syntastic_javascript_checkers=['jshint']
-
 " TabNine {{{2
 " toggle autocomplete
 nnoremap <leader>9 :let g:ycm_auto_trigger=!g:ycm_auto_trigger<CR>

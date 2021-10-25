@@ -3,7 +3,7 @@
 nnoremap <leader>s ms:%! js-beautify -<CR>'s
 vnoremap <leader>s :!js-beautify -<CR>
 " Check syntax - save first
-nnoremap <leader>c :SyntasticCheck<CR>
+nnoremap <leader>c :w<CR>:SyntasticCheck <CR>
 "
 setlocal tabstop=2
 setlocal shiftwidth=2
