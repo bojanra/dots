@@ -12,6 +12,8 @@ function confirm() {
     fi
 }
 
+echo "Install utils by: apt install vim tmux";
+
 if confirm "Make symbolic links to (tmux.conf, perltidyrc, astylerc, ackrc)? "; then
   cd ~
   pwd

@@ -20,7 +20,8 @@ fi
 export MCFLY_SESSION_ID=$(dd if=/dev/urandom bs=256 count=1 2> /dev/null | env LC_ALL=C tr -dc 'a-zA-Z0-9' | head -c 24)
 
 # Find the binary
-MCFLY_PATH=${MCFLY_PATH:-$(which mcfly)}
+#MCFLY_PATH=${MCFLY_PATH:-$(which mcfly)}
+MCFLY_PATH=$HOME/bin/mcfly
 if [ -z "$MCFLY_PATH" ]; then
   echo "Cannot find the mcfly binary, please make sure that mcfly is in your path before sourcing mcfly.bash."
   return 1

@@ -51,7 +51,7 @@ Plugin 'cespare/vim-toml'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-colorscheme-switcher'
 " TabNine autocomplete
-Plugin 'zxqfl/tabnine-vim'
+"Plugin 'zxqfl/tabnine-vim'
 " Mikrotik syntax
 " Plugin 'zainin/vim-mikrotik'
 " Toggle quickfix window
