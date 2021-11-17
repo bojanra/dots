@@ -37,47 +37,40 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm|xterm-color|*-256color) color_prompt=yes;;
-esac
+# MY FANCY PROMPT
+# PS1="[\[\e[1;32m\]\t\[\033[0m\]][\[\033[32m\]\w\[\033[0m\]]\n\[\033[1;36m\]\u\[\033[0m\]@\[\e[1;33m\]\h\\[\033[1;33m\]-> \[\033[0m\]"
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+SEP="║"
+SEP2="•"
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
+function parse_git_output {
+    path=$(pwd)
+    # Don't do git status over networked paths.
+    # It kills performance, and the prompt takes forever to return.
+    if [[ $path =~ "/net/" ]]; then
+        return
     fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    if [[ ${EUID} == 0 ]] ; then
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] '
-    else
-        # MY FANCY PROMPT
-        PS1="[\[\e[1;32m\]\t\[\033[0m\]][\[\033[32m\]\w\[\033[0m\]]\n\[\033[1;36m\]\u\[\033[0m\]@\[\e[1;33m\]\h\\[\033[1;33m\]-> \[\033[0m\]"
+    if [ -f ~/bin/git.awk ]; then
+        output=$(git status -sb --porcelain 2> /dev/null | ~/bin/git.awk -v separator=$SEP separator2=$SEP2 2> /dev/null) || return
+        echo -e "$output"
     fi
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h \w \$ '
-fi
-unset color_prompt force_color_prompt
+}
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+# store colors
+RESET="\[\033[0m\]"
+MAGENTA="\[\033[0;35m\]"
+YELLOW="\[\033[01;33m\]"
+BLUE="\[\033[00;34m\]"
+LIGHT_GRAY="\[\033[0;37m\]"
+LIGHT_CYAN="\[\033[1;36m\]"
+CYAN="\[\033[0;36m\]"
+LIGHT_GREEN="\[\033[1;32m\]"
+GREEN="\[\033[00;32m\]"
+RED="\[\033[0;31m\]"
+VIOLET='\[\033[01;35m\]'
+ENDC="\e[m"
+
+PS1="$RESET[$LIGHT_GREEN\t$RESET][$GREEN\w$RESET]\$(parse_git_output)\n$LIGHT_CYAN\u$RESET@$YELLOW\h->$ENDC "
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -149,6 +142,13 @@ alias gll="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset 
 alias gls="git ls-tree --full-tree -r --name-only HEAD"
 alias gclean="git clean -nxd"
 
+# vagrant alias
+alias vup="vagrant up"
+alias vsu="vagrant suspend"
+alias vss="vagrant ssh"
+alias vde="vagrant destroy"
+alias vpr="vagrant provision"
+
 alias diff='colordiff'
 alias path='echo -e ${PATH//:/\\n}'
 alias vi=vim
@@ -170,3 +170,4 @@ fi
 
 # icon support for lf  based on nerd font
 [ -f ~/.config/lf/icons ] && source ~/.config/lf/icons
+

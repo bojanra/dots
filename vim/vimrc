@@ -26,7 +26,7 @@ map <C-_> a<C-_><ESC>
 " Tagbar :Tagbar
 Plugin 'preservim/tagbar'
 " vimwiki
-Plugin 'vimwiki/vimwiki'
+"Plugin 'vimwiki/vimwiki'
 " Many many coloschemas
 Plugin 'flazz/vim-colorschemes'
 " Show git diff
@@ -36,8 +36,9 @@ Plugin 'vimoutliner/vimoutliner.git'
 " Time tracker use :TimeTap to show stats
 Plugin 'rainerborene/vim-timetap.git'
 " Syntax highlighting, matching rules and mappings for the original Markdown and extensions
+"Plugin 'jtratner/vim-flavored-markdown'
+"Plugin 'plasticboy/vim-markdown'
 "Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
 " Syntax checker
 Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
@@ -51,7 +52,7 @@ Plugin 'cespare/vim-toml'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-colorscheme-switcher'
 " TabNine autocomplete
-"Plugin 'zxqfl/tabnine-vim'
+Plugin 'zxqfl/tabnine-vim'
 " Mikrotik syntax
 " Plugin 'zainin/vim-mikrotik'
 " Toggle quickfix window
@@ -327,16 +328,17 @@ autocmd BufReadPost *
 "autocmd BufRead * silent! %s/^M$//
 autocmd FileType vim setlocal foldmethod=marker
 autocmd FileType javascript setlocal equalprg=js-beautify\ --stdin
-autocmd BufNewFile,BufRead  *.t setfiletype perl
-autocmd BufNewFile,BufRead *.t2t set ft=txt2tags
-autocmd BufNewFile,BufRead *.cfg set ft=ivg
-autocmd BufNewFile,BufRead *.wiki set ft=dokuwiki
-autocmd BufNewFile,BufRead *.asm set ft=avr
-autocmd BufNewFile,BufRead *.bcl set ft=freebasic
+autocmd BufRead,BufNewFile  *.t setfiletype perl
+autocmd BufRead,BufNewFile *.t2t set ft=txt2tags
+autocmd BufRead,BufNewFile *.cfg set ft=ivg
+"autocmd BufRead,BufNewFile *.wiki set ft=vimwiki
+"autocmd BufRead,BufNewFile notes/*.md set ft=vimwiki
+autocmd BufRead,BufNewFile,BufFilePre *.md set filetype=markdown.pandoc
+autocmd BufRead,BufNewFile *.asm set filetype=avr
+autocmd BufRead,BufNewFile *.bcl set filetype=freebasic
 autocmd BufRead,BufNewFile *.pde set filetype=c
 autocmd BufRead,BufNewFile *.ino set filetype=c
 autocmd BufRead,BufNewFile *.otl set filetype=votl
-autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.tt set filetype=html
 autocmd BufRead,BufNewFile *.html.ep set filetype=html
 "autocmd BufRead,BufNewFile *.twig set filetype=html
@@ -344,12 +346,11 @@ autocmd BufWinEnter,FileType vim  colorscheme madeofcode
 autocmd BufWinEnter,FileType votl colorscheme holokai
 autocmd BufWinEnter,FileType cpp  colorscheme xcode
 autocmd BufWinEnter,FileType php  colorscheme summerfruit256
-"autocmd BufWinEnter,FileType html colorscheme autumn
 autocmd BufWinEnter,FileType html colorscheme thor
-"autocmd BufWinEnter,FileType javascript colorscheme summerfruit256
 autocmd BufWinEnter,FileType javascript colorscheme thor
-" "autocmd BufWinEnter,FileType javascript colorscheme jellybeans
 autocmd BufWinEnter,FileType perl colorscheme biogoo
+"autocmd BufWinEnter,FileType javascript colorscheme summerfruit256
+"autocmd BufWinEnter,FileType javascript colorscheme jellybeans
 "autocmd BufWinEnter,FileType perl colorscheme madeofcode
 
 " \   else | colorscheme ashen |
@@ -424,18 +425,13 @@ let g:ackhighlight = 1
 let g:ack_autofold_results = 1
 let g:ackpreview = 1
 " VimWiki and My notetaking {{{2
-let wiki_1 = {}
-let wiki_1.path = '~/desk/notes/'
-let wiki_1.syntax = 'markdown'
-let wiki_1.ext = '.md'
-let wiki_2 = {}
-let wiki_2.path = '~/desk/tmp/'
-let wiki_2.syntax = 'markdown'
-let wiki_2.ext = '.md'
-let g:vimwiki_list = [wiki_1, wiki_2]
+let g:markdown_fenced_languages = ['javascript', 'js=javascript', 'json=javascript', 'perl', 'sh']
 let g:vimWiki = '/home/ramsakb/desk/notes/'
-"let g:vimwiki_list = [{'path': '~/.vim/notes/', 'syntax': 'markdown', 'ext': '.md'}]
-let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+" mark two or more spaces after some text as an error
+syntax match DoubleSpace /\S\zs {2,}/
+highlight link DoubleSpace Error
+"let g:vimwiki_list = [{'path': '~/desk/notes/', 'syntax': 'markdown', 'ext': '.md'}]
+"let g:vimwiki_global_ext = 0
 nnoremap <leader>. :NoteFind
 nnoremap <leader>- :Note
 " New command for searching in my wiki.
@@ -477,9 +473,11 @@ command! OrgCapture :call org#CaptureBuffer()
 command! OrgCaptureFile :call org#OpenCaptureFile()
 
 " Markdown {{{2
-let g:vim_markdown_folding_disabled=0
+"let g:vim_markdown_folding_disabled=0
 " Level shown when all folds are closed
-let g:vim_markdown_folding_level = 2
+let g:vim_markdown_folding_level = 3
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_toml_frontmatter = 1
 
 " Tagbar {{{2
 nnoremap <leader>t :TagbarToggle<CR>
