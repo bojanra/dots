@@ -41,7 +41,7 @@ Plugin 'rainerborene/vim-timetap.git'
 "Plugin 'godlygeek/tabular'
 " Syntax checker
 Plugin 'vim-syntastic/syntastic'
-Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline'
 " Show linenumbers only in active window"
 Plugin 'AssailantLF/vim-active-numbers'
 " Show color of tag
@@ -186,6 +186,7 @@ else
   highlight nonText ctermbg=NONE
 endif
 " Statusline - must be after colorscheme commmand {{{2
+set statusline=%m\ %F\ %m\%y\ %{&fileencoding?&fileencoding:&encoding}\ %=%(C:%c\ L:%l\ %P%)
 "set statusline=%t       "tail of the filename
 "set statusline+=%h      "help file flag
 "set statusline+=%m      "modified flag
@@ -767,4 +768,5 @@ function! Undouble_Completions ()
     call setline('.', substitute(line, '\(\k\+\)\%'.col.'c\zs\1', '', ''))
 endfunction
 " }}}
+
 
