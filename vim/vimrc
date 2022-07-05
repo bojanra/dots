@@ -12,7 +12,7 @@ call vundle#rc()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 " A fancy file browser press <leader> n
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
 " ack the better grep from within vim :Ack
 Plugin 'mileszs/ack.vim'
 " JSON Highlightning
@@ -119,6 +119,7 @@ set tabstop=2     " Set standard setting for PEAR coding standards
 set title         " change the terminal's title
 set undofile      " create undofiles
 set undolevels=1000      " use many muchos levels of undo
+
 set visualbell    " don't beep
 set wildignore=*.swp,*.bak,*.pyc,*.class
 "set wildmode=list:longest "file/command completion useful
@@ -141,6 +142,12 @@ set textwidth=120   " Linewidth to 120
 set tags=./tags,tags;$HOME
 " enable modeline
 set modeline
+" netrw stuff
+let g:netrw_banner=1
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_fastbrowse    = 0
+let g:netrw_silent        = 1
+let g:netrw_liststyle     = 0
 " UI settings {{{1
 if has('gui_running')
 "  set guioptions=imTrL
@@ -278,8 +285,6 @@ inoremap <C-S> <C-O>:update<CR>
 "Pressing F5 lists all buffer, just type number
 map  <F5> :ls<CR>:b
 "Walk through buffers
-map <F2> :bprevious<cr>
-map <F3> :bnext<cr>
 map <C-tab> :bnext<cr>
 map <C-S-tab> :bprevious<cr>
 "Disable autoindent
@@ -314,7 +319,7 @@ nnoremap K :<C-U>exe "Man" v:count "<C-R><C-W>"<CR>
 syntax on
 " Autocommands {{{1
 " Autoreload vimrc file on change
-autocmd! bufwritepost ~/.vim/vimrc source %
+"autocmd! bufwritepost ~/.vim/vimrc source %
 " Remove trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
 " Higlight all occurences of word under cursor
@@ -413,11 +418,11 @@ iabbrev <expr> debsig
 let g:airline_powerline_fonts = 1
 " NERDTree {{{2
 " close NERDTree after a file is opened
-let g:NERDTreeQuitOnOpen=1
+"let g:NERDTreeQuitOnOpen=1
 " Toggle the file browser
-nnoremap <leader>n :NERDTreeToggle .<CR>
+"nnoremap <leader>n :NERDTreeToggle .<CR>
 " Find the current file in the file browser
-nnoremap <leader>m :NERDTreeFind<CR>
+"nnoremap <leader>m :NERDTreeFind<CR>
 " Ack {{{2
 let g:ackprg = "/usr/bin/ack -H --nocolor --nogroup --smart-case"
 "let g:ackprg = "/usr/bin/ack --nocolor --nogroup --smart-case"
@@ -497,8 +502,17 @@ nmap <C-c><C-c> <Plug>NormalModeSendToTmux
 nmap <C-c>r <Plug>SetTmuxVars
 " syntastic {{{2
 " let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-let g:syntastic_php_checkers = ['php']
-let g:syntastic_javascript_checkers=['jshint']
+"let g:syntastic_php_checkers = ['php']
+"let g:syntastic_javascript_checkers=['jshint']
+"let g:syntastic_perl_checkers = ['perl']
+"let g:syntastic_enable_perl_checker = 0
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 " TabNine {{{2
 " toggle autocomplete
 nnoremap <leader>9 :let g:ycm_auto_trigger=!g:ycm_auto_trigger<CR>
@@ -768,5 +782,3 @@ function! Undouble_Completions ()
     call setline('.', substitute(line, '\(\k\+\)\%'.col.'c\zs\1', '', ''))
 endfunction
 " }}}
-
-

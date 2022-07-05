@@ -27,9 +27,10 @@
 ^xf - filename completition               | ~ uppercase char under cursor
 ^xo - method                              | search to next/previous occurence of char t T char or f F char
 Switch colorscheme with F8, S-F8, A-F8    | :-16,-14co.  copy lines from above here
-Switch off linebreak    | tslime - tmux
-:set formatoptions=l    | execute <C-c><C-c>
-:set lbr                | clear vars <C-c>r | show pane numbers in tmux leader q
+
+Switch off linebreak                      | tmux
+:set formatoptions=l                      | execute <C-c><C-c>
+:set lbr                                  | clear vars <C-c>r | show pane numbers in tmux leader q
 
 Step back from jumps <C-o>ut forward <C-i>n
 :vim pattern %   Search in current file and place in Quickfix
@@ -87,6 +88,7 @@ Execute:
 <number>@<letter>
 
 		VIM - bestof
+:perldo s/.*/$1/
 tabs ~ \t
 newline ~ \n  when searching or on the left-hand-side of a substitute
 newline ~ \r  when inserting a newline with a substitute (right-hand-side)

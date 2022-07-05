@@ -40,48 +40,20 @@ fi
 # MY FANCY PROMPT
 # PS1="[\[\e[1;32m\]\t\[\033[0m\]][\[\033[32m\]\w\[\033[0m\]]\n\[\033[1;36m\]\u\[\033[0m\]@\[\e[1;33m\]\h\\[\033[1;33m\]-> \[\033[0m\]"
 
-SEP="║"
-SEP2="•"
-
-function parse_git_output {
-    path=$(pwd)
-    # Don't do git status over networked paths.
-    # It kills performance, and the prompt takes forever to return.
-    if [[ $path =~ "/net/" ]]; then
-        return
-    fi
-    if [ -f ~/bin/git.awk ]; then
-        output=$(git status -sb --porcelain 2> /dev/null | ~/bin/git.awk -v separator=$SEP separator2=$SEP2 2> /dev/null) || return
-        echo -e "$output"
-    fi
+# use the powerline-go for a fancy prompt
+# https://github.com/justjanne/powerline-go
+function _update_ps1() {
+  PS1="$( powerline-go \
+    -ignore-repos $HOME \
+    -alternate-ssh-icon \
+    -colorize-hostname \
+    -hostname-only-if-ssh \
+    -git-mode compact \
+    -error $? \
+    -newline )"
 }
 
-# store colors
-RESET="\[\033[0m\]"
-MAGENTA="\[\033[0;35m\]"
-YELLOW="\[\033[01;33m\]"
-BLUE="\[\033[00;34m\]"
-LIGHT_GRAY="\[\033[0;37m\]"
-LIGHT_CYAN="\[\033[1;36m\]"
-CYAN="\[\033[0;36m\]"
-LIGHT_GREEN="\[\033[1;32m\]"
-GREEN="\[\033[00;32m\]"
-RED="\[\033[0;31m\]"
-VIOLET='\[\033[01;35m\]'
-ENDC="\e[m"
-
-PS1="$RESET[$LIGHT_GREEN\t$RESET][$GREEN\w$RESET]\$(parse_git_output)\n$LIGHT_CYAN\u$RESET@$YELLOW\h->$ENDC "
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias l='ls -l -h --color'
-    alias lu='l -tur'        #  Sort by/show access time,most recent last.
-    # The ubiquitous 'll': directories first, with alphanumeric sorting:
-    alias ll="l -v --group-directories-first"
-    alias la='ll -A'           #  Show hidden files.
-fi
+PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -110,10 +82,21 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# some more ls aliases
+# replace ls with exa
+# https://the.exa.website
+alias ls='exa --color=auto --git --icons'
+#    alias ll="exa -la --group-directories-first"
 alias ll='ls -alF'
-alias la='ls -A'
+alias lt='ls -l --tree --level=2'
 alias l='ls -lF'
+
+# replace cat with bat
+# https://github.com/sharkdp/bat/
+alias cat='batcat'
+
+# faster ack
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
+alias ack='rg'
 
 # handy aliases
 alias h='history'
