@@ -9,6 +9,6 @@ unlet b:current_syntax
 syntax include @SQL syntax/sql.vim
 
 " syntax region rubyHereDocSQL matchgroup=Statement            start=+<<\z(SQL\)+ end=+^\z1$+ contains=@SQL,rubyInterpolation
-syn region perlHereDocStartSQL	matchgroup=perlStringStartEnd start=+<<\s*"\z(SQL\)"+ end=+^\z1$+ contains=@SQL,perlSpecialString
+syn region perlHereDocStartSQL	matchgroup=perlStringStartEnd start=+<<\~\?\s*"\z(SQL\)"+ end=+\s*\z1$+ contains=@SQL,perlSpecialString
 
 let b:current_syntax = s:previous_syntax

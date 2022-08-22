@@ -9,7 +9,7 @@
 ,f - toggle quickfix list                 | :w!! - save file opened in read-only mode
 ,l - toggle location list                 | di(     - delete inside ()
 ,j - format json                          | dtX     - delete to X
-,m - start NERDTree Focus on current file | gf      - open file under cursor in same window
+,m - start NERDTree Focus on current file | gf      - open file under cursor in same window open url gx
 ,n - start NERDTree                       | C-Wf - open file under cursor in other window
 ,sc - toggle scratch                      | [I find word under cursor in include - [tab -jump there
 ,q - close current buffer(file)           |
@@ -28,9 +28,21 @@
 ^xo - method                              | search to next/previous occurence of char t T char or f F char
 Switch colorscheme with F8, S-F8, A-F8    | :-16,-14co.  copy lines from above here
 
+gj and gk - Move cursor up and down to wrapped part of a line as if it is a different line.
+g0 and g$ - Same as previous but move cursor to the first and last letter of a wrapped line.
+gq - Turn a long line into multiple lines.
+gu and gU - Uncapitalize and capitalize words/lines.
+~ and g~ - Switch capitalization of a letter.
+gf - Open highlighted text as file.
+gv - Reselecting previous selected text.
+gJ - Conjoining lines without leaving spaces.
+g& - Rerun substitute command for all lines.
+
+
 Switch off linebreak                      | tmux
 :set formatoptions=l                      | execute <C-c><C-c>
 :set lbr                                  | clear vars <C-c>r | show pane numbers in tmux leader q
+!!bash  - execute current line
 
 Step back from jumps <C-o>ut forward <C-i>n
 :vim pattern %   Search in current file and place in Quickfix

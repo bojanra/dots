@@ -148,17 +148,13 @@ let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_fastbrowse    = 0
 let g:netrw_silent        = 1
 let g:netrw_liststyle     = 0
+" open url just by typping gx
+let g:netrw_browsex_viewer="setsid xdg-open"
 " UI settings {{{1
 if has('gui_running')
 "  set guioptions=imTrL
   set guioptions=i
   set guitablabel=%t
-  noremap <M-Space> :simalt ~<CR>
-  inoremap <M-Space> <C-O>:simalt ~<CR>
-  cnoremap <M-Space> <C-C>:simalt ~<CR>
-  "set guifont=Monaco\ 11
-""  set guifont=Inconsolata\ 12
-  set guifont=Inconsolata\ for\ Powerline\ 12
 "  set guifont=Inconsolata\ for\ Powerline\ 17
   set guifont=FantasqueSansMono\ Nerd\ Font\ Mono\ Regular\ 12
 "
@@ -180,9 +176,11 @@ if has('gui_running')
 "  colorscheme solarized
 "  set background=dark
 "
-  colorscheme ashen
+"  colorscheme ashen
 "  colorscheme asmanian2
-  set background=light
+  colorscheme Atelier_ForestLight
+"  set background=light
+  set background=dark
 "  set lines=35 columns=150
 else
   set guioptions-=a
@@ -209,7 +207,7 @@ set statusline=%m\ %F\ %m\%y\ %{&fileencoding?&fileencoding:&encoding}\ %=%(C:%c
 " define leader
 let mapleader = ","
 let maplocalleader = "."
-set timeoutlen=400       "timout for waiting for next char
+set timeoutlen=500       "timout for waiting for next char
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 " open vimrc file
@@ -233,8 +231,7 @@ nnoremap <Leader>sc :e scratch<CR>:setlocal readonly<CR>
 " Run/execute current line in shell
 nnoremap <Leader>rl yy:r!<C-r>"<BS><CR>
 " Adjust viewports to the same size
-map <leader>= <C-w>=
-imap <leader>= <Esc> <C-w>="
+nnoremap <leader>= <C-w>=
 " change working directory to location of current file
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " Beautify JSON
@@ -339,7 +336,7 @@ autocmd BufRead,BufNewFile *.t2t set ft=txt2tags
 autocmd BufRead,BufNewFile *.cfg set ft=ivg
 "autocmd BufRead,BufNewFile *.wiki set ft=vimwiki
 "autocmd BufRead,BufNewFile notes/*.md set ft=vimwiki
-autocmd BufRead,BufNewFile,BufFilePre *.md set filetype=markdown.pandoc
+autocmd BufNewFile,BufReadPost,BufRead,BufFilePre *.md set filetype=markdown.pandoc
 autocmd BufRead,BufNewFile *.asm set filetype=avr
 autocmd BufRead,BufNewFile *.bcl set filetype=freebasic
 autocmd BufRead,BufNewFile *.pde set filetype=c
@@ -366,6 +363,7 @@ au FocusLost * :silent! wall
 highlight RedundantSpaces ctermbg=red guibg=red
 match RedundantSpaces /\s\+$\|\t/
 match RedundantSpaces /\s\+$/
+
 " Make the 81st column stand out
 "highlight ColorColumn ctermbg=magenta
 "set colorcolumn=81
@@ -438,8 +436,8 @@ syntax match DoubleSpace /\S\zs {2,}/
 highlight link DoubleSpace Error
 "let g:vimwiki_list = [{'path': '~/desk/notes/', 'syntax': 'markdown', 'ext': '.md'}]
 "let g:vimwiki_global_ext = 0
-nnoremap <leader>. :NoteFind
-nnoremap <leader>- :Note
+nnoremap <leader>. :NoteFind<space>
+nnoremap <leader>- :Note<space>
 " New command for searching in my wiki.
 " Syntac: NoteFind pattern [markdownfile|pattern2]
 " if the markdownfile exist pattern is searched inside
@@ -484,6 +482,7 @@ command! OrgCaptureFile :call org#OpenCaptureFile()
 let g:vim_markdown_folding_level = 3
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_toml_frontmatter = 1
+let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html']
 
 " Tagbar {{{2
 nnoremap <leader>t :TagbarToggle<CR>
