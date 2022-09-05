@@ -59,6 +59,10 @@ Plugin 'zxqfl/tabnine-vim'
 Plugin 'milkypostman/vim-togglelist'
 " naviagtion
 Plugin 'tpope/vim-vinegar'
+" svelte
+Plugin 'othree/html5.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'evanleck/vim-svelte', {'branch': 'main'}
 " All of your Plugins must be added before the following line
 filetype plugin indent on    " required
 filetype indent on
@@ -345,6 +349,7 @@ autocmd BufRead,BufNewFile *.otl set filetype=votl
 autocmd BufRead,BufNewFile *.tt set filetype=html
 autocmd BufRead,BufNewFile *.html.ep set filetype=html
 "autocmd BufRead,BufNewFile *.twig set filetype=html
+autocmd BufWinEnter,FileType svelte colorscheme jellybeans
 autocmd BufWinEnter,FileType vim  colorscheme madeofcode
 autocmd BufWinEnter,FileType votl colorscheme holokai
 autocmd BufWinEnter,FileType cpp  colorscheme xcode
