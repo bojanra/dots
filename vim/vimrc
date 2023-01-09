@@ -104,6 +104,7 @@ set noswapfile
 set nowrap        " Do not wrap lines automatically
 set nowrap        " don't wrap lines
 " set number        " always show line numbers
+set number
 set relativenumber
 set omnifunc=syntaxcomplete#Complete
 set ruler         " show the cursor position all the time
@@ -193,6 +194,7 @@ else
   colorscheme miko
   highlight Normal ctermbg=NONE
   highlight nonText ctermbg=NONE
+"  colorscheme Atelier_ForestLight
 endif
 " Statusline - must be after colorscheme commmand {{{2
 set statusline=%m\ %F\ %m\%y\ %{&fileencoding?&fileencoding:&encoding}\ %=%(C:%c\ L:%l\ %P%)
@@ -229,7 +231,7 @@ nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
 " Switch between last two buffers
 nnoremap <leader><leader> <C-^>
 " Format SQL
-vnoremap <Leader>sql :!sqlformat --reindent --keywords upper --identifiers lower -<CR>
+vnoremap <Leader>sql :!sqlformat --reindent --indent_width 4 --keywords upper --identifiers lower -<CR>
 " Scratch buffer
 nnoremap <Leader>sc :e scratch<CR>:setlocal readonly<CR>
 " Run/execute current line in shell
