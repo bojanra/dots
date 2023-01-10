@@ -5,67 +5,82 @@ filetype off
 
 let osys=system('uname -s')
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
 
 " Plugins {{{1
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 " A fancy file browser press <leader> n
-"Plugin 'scrooloose/nerdtree'
+"Plug 'scrooloose/nerdtree'
 " ack the better grep from within vim :Ack
-Plugin 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 " JSON Highlightning
-Plugin 'elzr/vim-json'
+Plug 'elzr/vim-json'
 " Extended % matching also for html
-Plugin 'tmhedberg/matchit'
+Plug 'tmhedberg/matchit'
 " Auto HTML closetag generator <\ or Crtl-shift-minus
-Plugin 'docunext/closetag.vim'
+Plug 'docunext/closetag.vim'
 inoremap <C-_> <C-R>=GetCloseTag()<CR>
 map <C-_> a<C-_><ESC>
 " Tagbar :Tagbar
-Plugin 'preservim/tagbar'
+Plug 'preservim/tagbar'
 " vimwiki
-"Plugin 'vimwiki/vimwiki'
+"Plug 'vimwiki/vimwiki'
 " Many many coloschemas
-Plugin 'flazz/vim-colorschemes'
+Plug 'flazz/vim-colorschemes'
 " Show git diff
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " The VIM Outliner fork of vimoutliner/vimoutliner.git
-Plugin 'vimoutliner/vimoutliner.git'
+Plug 'vimoutliner/vimoutliner'
 " Time tracker use :TimeTap to show stats
-Plugin 'rainerborene/vim-timetap.git'
+Plug 'rainerborene/vim-timetap'
 " Syntax highlighting, matching rules and mappings for the original Markdown and extensions
-"Plugin 'jtratner/vim-flavored-markdown'
-"Plugin 'plasticboy/vim-markdown'
-"Plugin 'godlygeek/tabular'
+"Plug 'jtratner/vim-flavored-markdown'
+"Plug 'plasticboy/vim-markdown'
+"Plug 'godlygeek/tabular'
 " Syntax checker
-Plugin 'vim-syntastic/syntastic'
-"Plugin 'vim-airline/vim-airline'
+Plug 'vim-syntastic/syntastic'
+"Plug 'vim-airline/vim-airline'
 " Show linenumbers only in active window"
-Plugin 'AssailantLF/vim-active-numbers'
+Plug 'AssailantLF/vim-active-numbers'
 " Show color of tag
-Plugin 'gorodinskiy/vim-coloresque.git'
+Plug 'gorodinskiy/vim-coloresque'
 " Syntax for TOML
-Plugin 'cespare/vim-toml'
+Plug 'cespare/vim-toml'
 " Colorscheme switcher
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-colorscheme-switcher'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-colorscheme-switcher'
 " TabNine autocomplete
-Plugin 'zxqfl/tabnine-vim'
+Plug 'zxqfl/tabnine-vim'
 " Mikrotik syntax
-" Plugin 'zainin/vim-mikrotik'
+" Plug 'zainin/vim-mikrotik'
 " Toggle quickfix window
-Plugin 'milkypostman/vim-togglelist'
+Plug 'milkypostman/vim-togglelist'
 " naviagtion
-Plugin 'tpope/vim-vinegar'
+Plug 'tpope/vim-vinegar'
 " svelte
-Plugin 'othree/html5.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
+" Use release branch (recommend)
+" tailwind-intellisense
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'rodrigore/coc-tailwind-intellisense', {'do': 'npm install'}
+"Plug 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
+call plug#end()
+
 " All of your Plugins must be added before the following line
-filetype plugin indent on    " required
-filetype indent on
+"filetype plugin indent on    " required
+"filetype indent on
+
 set synmaxcol=200
 syntax enable
 " Options {{{1
@@ -497,7 +512,7 @@ nnoremap <leader>t :TagbarToggle<CR>
 " Closetag {{{2
 " Prevent building stack for other filetypes
 autocmd FileType html,php let b:closetag_html_style=1
-autocmd FileType html,php source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+autocmd FileType html,php source ~/.vim/plugged/closetag.vim/plugin/closetag.vim
 
 " tslime {{{2
 " send commands to tmux

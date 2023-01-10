@@ -2,6 +2,8 @@
 .~*
 .netrwhist
 .netrwhist
-/vim/bundle
+/vim/autoload
 /vim/autosess
 /vim/colors
+/vim/plugged
+/vim/bundle
