@@ -58,9 +58,6 @@ Plug 'cespare/vim-toml'
 " Colorscheme switcher
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
-" TabNine autocomplete
-Plug 'tabnine/YouCompleteMe'
-" https://github.com/tabnine/YouCompleteMe
 " Mikrotik syntax
 " Plug 'zainin/vim-mikrotik'
 " Toggle quickfix window
@@ -537,8 +534,6 @@ nmap <C-c>r <Plug>SetTmuxVars
 "let g:syntastic_auto_loc_list = 1
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
-" TabNine {{{2
-"nnoremap <leader>9 :let g:ycm_auto_trigger=!g:ycm_auto_trigger<CR>
 " vim-togglelist {{{2
 let g:toggle_list_no_mappings = 1
 nmap <script> <silent> <leader>l :call ToggleLocationList()<CR>
