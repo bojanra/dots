@@ -59,7 +59,8 @@ Plug 'cespare/vim-toml'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
 " TabNine autocomplete
-Plug 'zxqfl/tabnine-vim'
+Plug 'tabnine/YouCompleteMe'
+" https://github.com/tabnine/YouCompleteMe
 " Mikrotik syntax
 " Plug 'zainin/vim-mikrotik'
 " Toggle quickfix window
@@ -70,6 +71,8 @@ Plug 'tpope/vim-vinegar'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
+" Markdown Preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " Use release branch (recommend)
 " tailwind-intellisense
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -535,9 +538,7 @@ nmap <C-c>r <Plug>SetTmuxVars
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
 " TabNine {{{2
-" toggle autocomplete
-nnoremap <leader>9 :let g:ycm_auto_trigger=!g:ycm_auto_trigger<CR>
-
+"nnoremap <leader>9 :let g:ycm_auto_trigger=!g:ycm_auto_trigger<CR>
 " vim-togglelist {{{2
 let g:toggle_list_no_mappings = 1
 nmap <script> <silent> <leader>l :call ToggleLocationList()<CR>
