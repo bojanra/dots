@@ -143,7 +143,7 @@ alias locate='locate -i'
 # - type the directory name to change into
 shopt -s autocd
 
-export EDITOR=/usr/bin/vim
+export EDITOR=/usr/bin/nvim
 
 # McFly - fly through your shell history
 # https://github.com/cantino/mcfly

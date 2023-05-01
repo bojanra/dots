@@ -18,8 +18,6 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 " Plugins {{{1
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
-" A fancy file browser press <leader> n
-"Plug 'scrooloose/nerdtree'
 " ack the better grep from within vim :Ack
 Plug 'mileszs/ack.vim'
 " JSON Highlightning
@@ -176,7 +174,7 @@ if has('gui_running')
   set guioptions=i
   set guitablabel=%t
 "  set guifont=Inconsolata\ for\ Powerline\ 17
-  set guifont=FantasqueSansMono\ Nerd\ Font\ Mono\ Regular\ 12
+  set guifont=FantasqueSansMono\ Nerd\ Font\ Regular\ 12
 "
 "  colorscheme atom
 "  set background=dark
@@ -203,13 +201,15 @@ if has('gui_running')
   set background=dark
 "  set lines=35 columns=150
 else
-  set guioptions-=a
+"  set guioptions-=a
+  set guioptions=i
+  set guitablabel=%t
   set t_Co=256
+  colorscheme Atelier_ForestLight
   set background=dark
-  colorscheme miko
-  highlight Normal ctermbg=NONE
-  highlight nonText ctermbg=NONE
-"  colorscheme Atelier_ForestLight
+"  colorscheme miko
+"  highlight Normal ctermbg=NONE
+"  highlight nonText ctermbg=NONE
 endif
 " Statusline - must be after colorscheme commmand {{{2
 set statusline=%m\ %F\ %m\%y\ %{&fileencoding?&fileencoding:&encoding}\ %=%(C:%c\ L:%l\ %P%)
@@ -245,6 +245,8 @@ nmap <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
 nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
 " Switch between last two buffers
 nnoremap <leader><leader> <C-^>
+" Switch to next buffer
+nnoremap <leader>- :bnext<CR>
 " Format SQL
 vnoremap <Leader>sql :!sqlformat --reindent --indent_width 4 --keywords upper --identifiers lower -<CR>
 " Scratch buffer
@@ -436,13 +438,6 @@ iabbrev <expr> debsig
 " Plugin configuration {{{1
 " vim-airline {{{2
 let g:airline_powerline_fonts = 1
-" NERDTree {{{2
-" close NERDTree after a file is opened
-"let g:NERDTreeQuitOnOpen=1
-" Toggle the file browser
-"nnoremap <leader>n :NERDTreeToggle .<CR>
-" Find the current file in the file browser
-"nnoremap <leader>m :NERDTreeFind<CR>
 " Ack {{{2
 let g:ackprg = "/usr/bin/ack -H --nocolor --nogroup --smart-case"
 "let g:ackprg = "/usr/bin/ack --nocolor --nogroup --smart-case"
@@ -459,7 +454,6 @@ highlight link DoubleSpace Error
 "let g:vimwiki_list = [{'path': '~/desk/notes/', 'syntax': 'markdown', 'ext': '.md'}]
 "let g:vimwiki_global_ext = 0
 nnoremap <leader>. :NoteFind<space>
-nnoremap <leader>- :Note<space>
 " New command for searching in my wiki.
 " Syntac: NoteFind pattern [markdownfile|pattern2]
 " if the markdownfile exist pattern is searched inside
@@ -485,7 +479,6 @@ function NoteAck(...)
     call ack#Ack( 'grep', '"'.a:1.'" '.g:vimWiki)
   endif
 endfun
-command! -nargs=1 Note :exe "e! " . fnameescape(g:vimWiki."<args>.md")
 nnoremap <C-N> :cnext<CR>
 nnoremap <C-P> :cprevious<CR>
 " }}}
@@ -554,8 +547,8 @@ function! InsertTabWrapper(direction)
 "        return pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete('buffer')
     endif
 endfunction
-"inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
-"inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
+inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
+inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
 " }}}
 " ShowFuncName - show current function name by pressing F {{{2
 function! ShowFuncName()
@@ -751,16 +744,16 @@ highlight Folded  ctermfg=cyan ctermbg=black
 nmap <silent> <expr>  zz  FS_ToggleFoldAroundSearch({'context':1})
 
 " Show only sub defns (and maybe comments)...
-"let perl_sub_pat = '^\s*\%(sub\|func\|method\|package\)\s\+\k\+'
-"let vim_sub_pat = '^\s*fu\%[nction!]\s\+\k\+'
-"augroup FoldSub
-"    autocmd!
-"    autocmd BufEnter * nmap <silent> <expr>  zp  FS_FoldAroundTarget(perl_sub_pat,{'context':1})
-"    autocmd BufEnter * nmap <silent> <expr>  za  FS_FoldAroundTarget(perl_sub_pat.'\\|^\s*#.*',{'context':0, 'folds':'invisible'})
-"    autocmd BufEnter *.vim,.vimrc nmap <silent> <expr>  zp  FS_FoldAroundTarget(vim_sub_pat,{'context':1})
-"    autocmd BufEnter *.vim,.vimrc nmap <silent> <expr>  za  FS_FoldAroundTarget(vim_sub_pat.'\\|^\s*".*',{'context':0, 'folds':'invisible'})
-"    autocmd BufEnter * nmap <silent> <expr>             zv  FS_FoldAroundTarget(vim_sub_pat.'\\|^\s*".*',{'context':0, 'folds':'invisible'})
-"augroup END
+let perl_sub_pat = '^\s*\%(sub\|func\|method\|package\)\s\+\k\+'
+let vim_sub_pat = '^\s*fu\%[nction!]\s\+\k\+'
+augroup FoldSub
+    autocmd!
+    autocmd BufEnter * nmap <silent> <expr>  zp  FS_FoldAroundTarget(perl_sub_pat,{'context':1})
+    autocmd BufEnter * nmap <silent> <expr>  za  FS_FoldAroundTarget(perl_sub_pat.'\\|^\s*#.*',{'context':0, 'folds':'invisible'})
+    autocmd BufEnter *.vim,.vimrc nmap <silent> <expr>  zp  FS_FoldAroundTarget(vim_sub_pat,{'context':1})
+    autocmd BufEnter *.vim,.vimrc nmap <silent> <expr>  za  FS_FoldAroundTarget(vim_sub_pat.'\\|^\s*".*',{'context':0, 'folds':'invisible'})
+    autocmd BufEnter * nmap <silent> <expr>             zv  FS_FoldAroundTarget(vim_sub_pat.'\\|^\s*".*',{'context':0, 'folds':'invisible'})
+augroup END
 
 " Show only C #includes...
 nmap <silent> <expr>  zu  FS_FoldAroundTarget('^\s*use\s\+\S.*;',{'context':1})
